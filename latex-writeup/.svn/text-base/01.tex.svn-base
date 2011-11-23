@@ -1,0 +1,48 @@
+% This is latex template version 0.1
+\documentclass[twosided,times,11pt]{article}
+
+\usepackage[draft]{djb}
+\usepackage{shortcuts}
+\usepackage{fancyhdr}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Scribes: you must fill these in %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\lecdate}{Sept 9, 2009}
+\newcommand{\lecnum}{1}
+\newcommand{\lectitle}{Introduction}
+\newcommand{\scribe}{Scribe Names}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\pagestyle{fancyplain}
+
+\setlength{\headheight}{14pt}
+\lhead[\fancyplain{}{\bfseries L\lecnum.\thepage}]%
+      {\fancyplain{}{\bfseries\lectitle}}
+\chead[]{}
+\rhead[\fancyplain{}{\bfseries\lectitle}]%
+      {\fancyplain{}{\bfseries L\lecnum.\thepage}}
+\lfoot[{\small\scshape Lecture Notes}]{{\small\scshape Lecture Notes}}
+\cfoot[]{}
+\rfoot[{\small\scshape\lecdate}]{{\small\scshape\lecdate}}
+
+\hypersetup{%
+pdfauthor = {David Brumley},
+pdftitle = {\lectitle},
+bookmarksopen= {true}
+}
+
+\begin{document}
+\maketitle
+
+\section{Section}
+
+This is a citation~\cite{abadi:2005}.
+
+\bibliographystyle{plain}
+\bibliography{biblio}
+
+\end{document}
+
+
