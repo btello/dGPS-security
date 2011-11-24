@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  23 NOV 2011 10:53
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  24 NOV 2011 14:54
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -443,7 +443,7 @@ File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
 \f@ncyO@olf=\skip67
 \f@ncyO@orf=\skip68
 )
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 34.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 32.
 
 
 LaTeX Warning: Unused global option(s):
@@ -452,21 +452,21 @@ LaTeX Warning: Unused global option(s):
 (./01.aux)
 \openout1 = `01.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Try loading font information for OT1+ppl on input line 36.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Try loading font information for OT1+ppl on input line 34.
  (/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
@@ -500,83 +500,100 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption3 Info: subfig package 1.2 or 1.3 is loaded.
-LaTeX Info: Redefining \subref on input line 36.
+LaTeX Info: Redefining \subref on input line 34.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count138
 \AtBeginShipoutBox=\box35
-Package hyperref Info: Link coloring ON on input line 36.
-LaTeX Info: Redefining \ref on input line 36.
-LaTeX Info: Redefining \pageref on input line 36.
-LaTeX Info: Redefining \nameref on input line 36.
+Package hyperref Info: Link coloring ON on input line 34.
+LaTeX Info: Redefining \ref on input line 34.
+LaTeX Info: Redefining \pageref on input line 34.
+LaTeX Info: Redefining \nameref on input line 34.
 
 (./01.out) (./01.out)
 \@outlinefile=\write3
 \openout3 = `01.out'.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 38.
+LaTeX Font Info:    Try loading font information for U+msa on input line 36.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 38.
+LaTeX Font Info:    Try loading font information for U+msb on input line 36.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 39.
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 37.
 Missing character: There is no Õ in font pplr7t!
-Missing character: There is no Ò in font pplr7t!
-Missing character: There is no Ó in font pplr7t!
-Missing character: There is no Ò in font pplr7t!
-Missing character: There is no Ó in font pplr7t!
-Missing character: There is no Ò in font pplr7t!
-Missing character: There is no Ó in font pplr7t!
-Missing character: There is no Ò in font pplr7t!
-Missing character: There is no Ó in font pplr7t!
- [1
+
+Underfull \hbox (badness 10000) in paragraph at lines 43--49
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 43--49
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 43--49
+
+ []
+
+Missing character: There is no Õ in font pplr7t!
+
+Underfull \hbox (badness 10000) in paragraph at lines 52--57
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 52--57
+
+ []
+
+[1
 
 {/usr/local/texlive/2011/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 Missing character: There is no Õ in font pplr7t!
-Missing character: There is no Õ in font pplr7t!
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 78.
- [2]
-No file 01.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 87.
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 82.
+
+[2] (./01.bbl
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 6.
+ (/usr/local/texlive/2011/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+))
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 92.
+
 [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 87.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 92.
  (./01.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 87.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 87.
-
-
-Package rerunfilecheck Warning: File `01.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `01.out':
-(rerunfilecheck)             Before: 9D851786D13FA4C9D3297FACDC3D38D9;404
-(rerunfilecheck)             After:  A6A9D06522AB07B97B61278BCDF13800;449.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 87.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 92.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 92.
+Package rerunfilecheck Info: File `01.out' has not changed.
+(rerunfilecheck)             Checksum: A6A9D06522AB07B97B61278BCDF13800;449.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 92.
  ) 
 Here is how much of TeX's memory you used:
- 9036 strings out of 493633
- 132576 string characters out of 3143378
- 251222 words of memory out of 3000000
- 12164 multiletter control sequences out of 15000+200000
- 17220 words of font info for 50 fonts, out of 3000000 for 9000
+ 9097 strings out of 493633
+ 133463 string characters out of 3143378
+ 252222 words of memory out of 3000000
+ 12211 multiletter control sequences out of 15000+200000
+ 20048 words of font info for 59 fonts, out of 3000000 for 9000
  834 hyphenation exceptions out of 8191
- 51i,11n,51p,1105b,328s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 51i,11n,51p,1127b,328s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2011/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/
-2011/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb>
-Output written on 01.pdf (3 pages, 49195 bytes).
+exlive/2011/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2
+011/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2011/tex
+mf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2011/texmf-dist
+/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on 01.pdf (3 pages, 72716 bytes).
 PDF statistics:
- 67 PDF objects out of 1000 (max. 8388607)
- 59 compressed objects within 1 object stream
- 13 named destinations out of 1000 (max. 500000)
- 65 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 89 PDF objects out of 1000 (max. 8388607)
+ 79 compressed objects within 1 object stream
+ 18 named destinations out of 1000 (max. 500000)
+ 73 words of extra memory for PDF output out of 10000 (max. 10000000)
 

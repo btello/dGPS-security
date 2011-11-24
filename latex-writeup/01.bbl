@@ -1,0 +1,25 @@
+\begin{thebibliography}{1}
+
+\bibitem{NTRIP_BC_INFO}
+Federal~Agency for Cartography and Gedesy (BKG).
+\newblock Ntrip broadcaster information.
+\newblock \url{http://rtcm-ntrip.org/home.html}.
+\newblock Frankfurt, Germany.
+
+\bibitem{NDGPS1}
+Gary Pruitt and Carl~Eric Fly.
+\newblock Ndgps assessment final report.
+\newblock Technical report, ARINC Incorporated for U.S. Department of
+  Transportation, March 2008.
+
+\bibitem{RTCM3}
+Radio Technical Commission on Maritime Services, 1800 North Kent St. Suite 1060
+  Arlington, VA.
+\newblock {\em RTCM Standard 10403.1 for DGNSS Services Version 3}, 2006.
+
+\bibitem{NTRIP2}
+Radio Technical Commission on Maritime Services, Arlington, VA.
+\newblock {\em Networked Transport of RTCM via Internet Protocol (NTRIP version
+  2.0)}, 2011.
+
+\end{thebibliography}
