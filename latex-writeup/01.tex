@@ -47,7 +47,7 @@ First we will discuss the RTCM 10403.1 standard (Differential GNSS Services Vers
 \newline
 \newline
 
-The second standard of interest is known as Ntrip (Networked Transport of RTCM over Internet Protocol) which is also published by the RTCM Special Committee 104.  Ntrip is an application layer networking protocol designed to stream RTCM correction data over the Internet.  A feature of Ntrip that seems to be popular is that it can transmit corrections over cellular data networks such as GPRS and EDGE, thus allowing corrections to be downloaded in very remote locations.  After conducting a survey of commercial GNSS devices and conducting brief interviews with sources close to the development of Ntrip we have come to the conclusion that most commercial GNSS reference stations are equipped with the capability to transmit RTCM correction data over Ntrip.  Furthermore, it has a wide variety of use cases which will be discussed in // TODO  SECTION NUMBER. The technical details of the protocol are contained in the following paragraphs.
+The second standard of interest is known as Ntrip (Networked Transport of RTCM over Internet Protocol) which is also published by the RTCM Special Committee 104.  Ntrip is an application layer networking protocol designed to stream RTCM correction data over the Internet.  A feature of Ntrip that seems to be popular is that it can transmit corrections over cellular data networks such as GPRS and EDGE, thus allowing corrections to be downloaded in very remote locations.  After conducting a survey of commercial GNSS devices and conducting brief interviews with sources close to the development of Ntrip we have come to the conclusion that most commercial GNSS reference stations are equipped with the capability to transmit RTCM correction data over Ntrip.  Furthermore, it has a wide variety of use cases which will be discussed in Section 4. The technical details of the protocol are contained in the following paragraphs.
 
 The primary objective of the Ntrip protocol is to transmit correction data from reference stations to receivers over the Internet.  Its architecture is similar to that of a streaming Internet radio service.  When a GNSS receiver wants to ``listen'' to a correction stream from a reference station, it requests the stream from a broadcast source which delivers the stream to the receiver in real time.  In Ntrip terminology a reference station is known as an Ntrip Source, a receiver is known as an Ntrip Client ,and a broadcaster is known as an Ntrip Caster.  An additional component known as an Ntrip server acts as a middle man between sources and casters.  The server aggregates data streams coming from sources and delivers them to casters which in turn aggregate several servers.
 \newline
@@ -55,27 +55,75 @@ The primary objective of the Ntrip protocol is to transmit correction data from 
 // TODO Insert picture of the Ntrip architecture here.  It’s saved in your dropbox
 \newline
 
-The standard is relatively abstract in its definitions of these components so it is helpful to understand how these components might be implemented in a real Ntrip network.  Ntrip sources are implemented in GNSS reference stations such as the Trimble NetRS.  The device generates RTCM data and is uploaded to a server using one of several communications interfaces such as serial, TCP/IP, or various others (the Ntrip standard actually doesn’t define a communication interface between sources and servers).  An Ntrip server and an Ntrip caster would be a traditional software package installed on one or more desktop/laptop computer(s).  Although they are defined as two logically separate entities, the server and caster program can be implemented as part of the same program and still conform to the specification \cite{NTRIP2}.  A client is a piece of software at the receiver which is trying to correct its position.  The Ntrip client downloads corrections and hands them off to the GNSS software which then applies them to an uncorrected position calculation in order to get a corrected position.
+The standard is relatively abstract in its definitions of these components so it is helpful to understand how they might be implemented in a real Ntrip network.  An Ntrip source is simply a pseudonym for GNSS reference stations such as the Trimble NetRS.  The device generates raw RTCM data which is uploaded to a server using one of several communications interfaces such as serial, TCP/IP, or various others (the Ntrip standard actually doesn’t define a communication interface between sources and servers).  An Ntrip server and an Ntrip caster are generally implemented as traditional software packages installed on one or more desktop/laptop computer(s).  Although they are defined as two logically separate entities, the server and caster can be implemented as part of the same program and still conform to the specification \cite{NTRIP2}.  A client is a piece of software at the end user's receiver which is trying to correct its position.  The Ntrip client downloads corrections and hands them off to the GNSS software which then applies them to an uncorrected position calculation in order to get a corrected, high precision, position. During our research we have found Ntrip client programs implemented on cell phones and devices known as data controllers, however, it would be perfectly reasonable to implement it directly on the receiver itself.
 
 The reason we have decided to focus our efforts on Ntrip and RTCM is because of their non-proprietary nature.  The two are not the only protocols available for encoding and disseminating differential correction data but they are certainly widely implemented and open to public use (for a small fee).  Knowing that all differential GNSS packages adhere to the same physical principles, we assume that they would be vulnerable in similar ways but this question is left for future work.
 \section{Applications}
 
 NDGPS Assessment report has tons of applications \cite{NDGPS1}
 
+The University of California San Diego delivers differential corrections in support of ``early warning systems for natural disasters''
+
+\section{Attack Vectors}
+
+In this section, we will outline potential attack vectors against Ntrip networks.
+
+\subsection{Man in the middle}
+
+Casters are the backbone of the Ntrip network. Worldwide, there are about 140 documented NTCasters\cite{NTRIP_BC_INFO}.  We have reason to believe that the number is actually much greater than that since an interview with a single user revealed two additional casters which were not on the official list. 
+
+\subsection{Cracking Authentication}  Look at the Digest Authentication and caster management sections of the Ntrip 2 standard
+
 \section{Attack Taxonomy}
 
-- Attacks on Casters (man in the middle)
-Casters are the backbone of the Ntrip network. Worldwide, there are about 140 documented NTCasters\cite{NTRIP_BC_INFO}.  We have reason to believe that the number is actually much greater than that since we were able to find two more private casters with a couple of user interviews.  
+\subsection{Navigational/Control Confusion}
 
-- Man in the Middle with GPRS, EDGE Rogue Base Station
+- Machine control
+- Maritime
+
+\subsection{False Billing} 
+Depending on the billing model used, we could continually log in and download corrections under someone else's account.  The billing models we encountered were all flate rate charges (per month) but one could imagine other pay-per-use systems.
+
+\subsection{Diversionary Attacks}
+The use of differential GPS in infrastructure and environmental monitoring projects \cite{UCSD_RTN}
+
+// TODO Find a reference for the infrastructure side
+
+ creates an interesting class of attacks in which an adversary could signal false alarms from sensors to create diversions.  One might imagine a scenario in which an attacker transmits manipulated correction data in a manner that signals a collapsing bridge or an imminent hurricane.  
+ 
+ \subsection{Economic Damage}
+
+- Bad surveys/engineering plots etc.
+- Agriculture
+
+\subsection{Location Privacy Violations}
 - Location Privacy Concerns for the clients.  Read Section 2.1.3 of the Ntrip 2 standard
-- Cracking authentication.  Look at the Digest Authentication and caster management sections of the Ntrip 2 standard
+
+How many streams require digest authentication (STR records)?
+0
+
+How many streams require basic or no authentication?
+81
+
+How many streams require payment (STRM records)?
+10
+
+How many streams require no payment?
+71
+
+What are the different types of streams?
+GPSNet: 7
+GNSMART: 3
+Trimble NetRS: 41 (Berkley: 41)
+TPS Net-G3A: 30
+Trimble 5700: 1
 
 \section{An Attack on a Real Time Kinematics Engine}
 \section{Scope of Impact}
 \section{Future Work}
 
 Investigate how networks average error
+Find out if the corrupted corrections can be used to affect time calculations
 Investigate other DGPS protocols
 Run our attack on a real RTK receiver (not rtklib)  and see if we get similar results
 
@@ -84,7 +132,6 @@ Run our attack on a real RTK receiver (not rtklib)  and see if we get similar re
 Dr. Georg Weber for providing helpful links and commentary on the adoption of Ntrip in geodetic equipment.
 Jeff Jalbrzikowski for providing valuable guidance regarding real life applications of Differential GPS and GNSS in the context of Surveying.
 Tyler Nyswander for sharing his efforts in gaining root access to the NetRS device.
-
 
 \bibliographystyle{plain}
 \bibliography{biblio}

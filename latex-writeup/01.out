@@ -3,7 +3,9 @@
 \BOOKMARK [1][]{section.3}{RTCM and Ntrip}{}% 3
 \BOOKMARK [1][]{section.4}{Applications}{}% 4
 \BOOKMARK [1][]{section.5}{Attack Taxonomy}{}% 5
-\BOOKMARK [1][]{section.6}{An Attack on a Real Time Kinematics Engine}{}% 6
-\BOOKMARK [1][]{section.7}{Scope of Impact}{}% 7
-\BOOKMARK [1][]{section.8}{Future Work}{}% 8
-\BOOKMARK [1][]{section.9}{Thanks}{}% 9
+\BOOKMARK [2][]{subsection.5.1}{Man in the middle}{section.5}% 6
+\BOOKMARK [2][]{subsection.5.2}{2}{section.5}% 7
+\BOOKMARK [1][]{section.6}{An Attack on a Real Time Kinematics Engine}{}% 8
+\BOOKMARK [1][]{section.7}{Scope of Impact}{}% 9
+\BOOKMARK [1][]{section.8}{Future Work}{}% 10
+\BOOKMARK [1][]{section.9}{Thanks}{}% 11
