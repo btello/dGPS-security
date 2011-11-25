@@ -9,7 +9,7 @@
 %%% Scribes: you must fill these in %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\lecdate}{November 23, 2011}
-\newcommand{\lectitle}{A Taxonomy of Vulnerabilities Against Differential GPS}
+\newcommand{\lectitle}{A Taxonomy of Vulnerabilities In Differential GPS}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -38,7 +38,7 @@ bookmarksopen= {true}
 \section{Differential GPS}
 \section{RTCM and Ntrip}
 
-The Radio Technical Commission for Maritime Services (RTCM) is a non-profit organization comprised of both government and non-government bodies that is heavily involved in publishing standards related to several topics including differential GNSS.   RTCM’s Special Committee 104 publishes two standards which we focused on in our research.  
+The Radio Technical Commission for Maritime Services (RTCM) is a non-profit organization comprised of both government and non-government bodies that publishes standards related to several topics including differential GNSS.   RTCM’s Special Committee 104 publishes two standards which we focused on in our research.  
 
 First we will discuss the RTCM 10403.1 standard (Differential GNSS Services Version 3).  The 10403.1 standard defines a set of messages which contain the data required by Differential GNSS capable receivers\cite{RTCM3}.  The data defined by this standard is commonly referred to as just ``RTCM'', ``RTCM-104'', or ``RTCMv3''.  From this point on, we will refer to the data standard as RTCM unless it would be ambiguous in which case we will be careful to clarify the intended meaning.
 \newline
@@ -55,77 +55,108 @@ The primary objective of the Ntrip protocol is to transmit correction data from 
 // TODO Insert picture of the Ntrip architecture here.  It’s saved in your dropbox
 \newline
 
-The standard is relatively abstract in its definitions of these components so it is helpful to understand how they might be implemented in a real Ntrip network.  An Ntrip source is simply a pseudonym for GNSS reference stations such as the Trimble NetRS.  The device generates raw RTCM data which is uploaded to a server using one of several communications interfaces such as serial, TCP/IP, or various others (the Ntrip standard actually doesn’t define a communication interface between sources and servers).  An Ntrip server and an Ntrip caster are generally implemented as traditional software packages installed on one or more desktop/laptop computer(s).  Although they are defined as two logically separate entities, the server and caster can be implemented as part of the same program and still conform to the specification \cite{NTRIP2}.  A client is a piece of software at the end user's receiver which is trying to correct its position.  The Ntrip client downloads corrections and hands them off to the GNSS software which then applies them to an uncorrected position calculation in order to get a corrected, high precision, position. During our research we have found Ntrip client programs implemented on cell phones and devices known as data controllers, however, it would be perfectly reasonable to implement it directly on the receiver itself.
+The standard is relatively abstract in its definitions of these components so it is helpful to understand how they might be implemented in a real Ntrip network.  An Ntrip source is simply a pseudonym for GNSS reference stations such as the Trimble NetRS.  The device generates raw RTCM data which is uploaded to a server using one of several communications interfaces such as serial, TCP/IP, or various others (the Ntrip standard actually doesn’t define a communication interface between sources and servers).  An Ntrip server and an Ntrip caster are generally implemented as traditional software packages installed on one or more desktop/laptop computer(s).  Although they are defined as two logically separate entities, the server and caster can be implemented as part of the same program and still conform to the specification \cite{NTRIP2}.  A client is a piece of software at the end user's receiver which is trying to correct its position.  A client downloads a list of reachable devices from the caster.  The list of devices is called a source table and contains entries for other casters, networks, and correction streams from reference stations.  The Ntrip client downloads corrections and hands them off to the GNSS software which then applies them to an uncorrected position calculation in order to get a corrected, high precision, position. During our research we have found Ntrip client programs implemented on cell phones and devices known as data controllers, however, it would be perfectly reasonable to implement it directly on the receiver itself.
 
 The reason we have decided to focus our efforts on Ntrip and RTCM is because of their non-proprietary nature.  The two are not the only protocols available for encoding and disseminating differential correction data but they are certainly widely implemented and open to public use (for a small fee).  Knowing that all differential GNSS packages adhere to the same physical principles, we assume that they would be vulnerable in similar ways but this question is left for future work.
-\section{Applications}
 
-NDGPS Assessment report has tons of applications \cite{NDGPS1}
+\section{Sample Applications}
 
-The University of California San Diego delivers differential corrections in support of ``early warning systems for natural disasters''
+This section will enumerate a subset of the possible applications of differential GPS.  The applications listed here are those for which we were able to determine that Ntrip is being used in some way.  One should refer to the National DGPS Assessment Report from the US Department of Transportation\cite{NDGPS1} for a more comprehensive list of the application domains of GNSS in general.
+
+\subsection{Machine Control}
+
+Machine control is a sector of the GNSS industry which aims to make construction projects more efficient and accurate.  In machine control, GNSS receivers are hooked up to construction equipment such as bulldozers, scrapers, excavators, etc.  The GNSS receivers assist equipment operators in things like maintaining consistent grades throughout a project.  For example, if a grader were too far off its mark, the GNSS system could either warn the operator or make automatic corrections without operator assistance.  This saves time and money for a construction firm and would most likely increase the overall quality of their work.  By using differential GNSS techniques,  the equipment can be made even more accurate \cite{TRIMBLE_MACH_CTRL}.
+
+\subsection{Navigation}
+
+Real time maritime and aerial navigation are two applications which are especially interesting.  During the course of our research, we were unable to find any specific instances of Ntrip in use in either arena.  We do know, however, that the NetRS device can be configured to function as a Wide Area Augmentation System (WAAS) reference station.  Since we have shown that the NetRS is vulnerable to compromise, this probably isn't a good thing.  The NDGPS assessment report contains an excellent list of real world applications of Differential GNSS in the navigation domain \cite{NDGPS1}.
+
+Automating your steering wheel is another interesting area in which high precision GNSS could be used.  In \cite{Uradzinski:2010}, the use of Ntrip based RTK solutions was investigated for its use in automated collision avoidance for land based automobiles.  While this was only a research study, it shows that there are people who are interested in applying this technology to automated land based vehicle navigation.  Another example of such a system is the Cooperative Intersection Collision Avoidance System (CICAS) run by the US Dept. of Transportation and described in \cite{NDGPS1}
+
+\subsection{Surveying}
+
+Surveyors, by the nature of their profession, require the use of very precise position information and thus benefit greatly from the use of differential GNSS technologies.  Surveyors often perform the task of staking out important geographical reference points.  To get an idea of the importance of the accuracy of reference points, imagine trying to build a house based on a reference point that was off by a foot.  If you didn't catch the mistake, your entire house would be shifted a foot from where you wanted it!  While, admittedly, this is a contrived example, it is simply meant to illustrate the types of errors that can occur if a surveyor is wrong.  The work of surveyors is broad in scope but it is fair enough to say that they are responsible for laying the basis for geographic measurements within a given context.  If they are wrong, everyone else will be wrong as well.
+
+\subsection{Infrastructure Monitoring}
+
+Monitoring of critical infrastructure such as bridges, tunnels, and dams is an important part of the professional surveying community.  Infrastructure monitoring involves installing high precision sensors in strategic locations on structures of interest.  the sensors generate position data which is compared against a set of movement thresholds.  If the thresholds are broken (the structure has shifted an unacceptable amount) a notification is delivered so that appropriate action can be taken\cite{TRIMBLE_INF_MON}.
+
+\subsection{Early Warning Systems}
+
+The University of California San Diego maintains a real time GNSS network dedicated to researching ``early warning systems for natural disasters'' \cite{UCSD_RTN}.  The network is known as the California Real Time Network.  A brief survey of some of the documents found on the network's website indicate that the primary concern is earthquakes.
 
 \section{Attack Vectors}
 
-In this section, we will outline potential attack vectors against Ntrip networks.
+In this section, we will outline potential attack vectors against Ntrip networks.  These are mechanisms by which an attacker can influence the data received by an Ntrip client.  A list of objectives of these attacks is provided in Section 6.
+
+\subsection{Security Statistics}
+To assist us in our attack vector assessment, we have collected a small body of statistics regarding the security of Ntrip sources.  We wrote a script which scanned the list of casters provided at rtcm-ntrip.org to determine what kind of security is in place in the wild for Ntrip sources.  
+
+Our script considered the Ntrip network as a directed cyclic graph with a ``root'' vertex at rtcm-ntrip.org which provides links to over 140 Ntrip casters\cite{NTRIP_BC_INFO} (22 of which we were unable to connect to).  The source table obtained from a vertex describes the edges leading to neighboring vertices.  Caster, and network entries in a  vertex's source table are considered branch nodes and source entries are considered leaves.  
+
+The script we wrote performed a traversal to depth 1 in the graph, gathering statistics about each Ntrip source encountered including: device type, whether a fee is charged for accessing the source, and whether the device uses digest or basic authentication.  We chose to only go to depth 1 in the interest of time.  This gave us statistics on over 5000 source devices.  What we found is that only one of the streams required digest authentication, 867 of them assessed a fee, and that the Trimble NetRS was the most prevalent device found in the wild (22 percent of the devices we found were NetRS stations).
+
+It should be noted that although this is a fair amount of data, it is likely only a small sampling of the total population of Ntrip sources.  Our script identified 291 caster links which it simply ignored.  Since we only scanned 119 casters, one can imagine how much data is still available.   
+
+// TODO Insert some sort of chart summarizing the important security statistics
 
 \subsection{Man in the middle}
 
-Casters are the backbone of the Ntrip network. Worldwide, there are about 140 documented NTCasters\cite{NTRIP_BC_INFO}.  We have reason to believe that the number is actually much greater than that since an interview with a single user revealed two additional casters which were not on the official list. 
+The most serious attack vector we have identified is a man in the middle attack between casters and clients.  If a skilled adversary could convince a client to connect to his malicious caster using any number of network based man in the middle attacks 
 
-\subsection{Cracking Authentication}  Look at the Digest Authentication and caster management sections of the Ntrip 2 standard
+\cite{BLACKHAT:2011} 
+
+he could easily spoof the Ntrip protocol and trick the client into using corrupted correction data.  This attack is possible due to the lack of mutual authentication between clients and casters in the Ntrip protocol.
+
+We consider this the most dangerous of our attacks because it is equivalent to compromising the RTCM streams served by that caster.  This way, an attacker wouldn't have to worry about the receiver device ``averaging out'' a misbehaving stream (so far we have found no evidence of software that does this) as long as they spoofed all the streams to  misbehave identically.
+
+\subsection{Authentication Spoofing}  
+
+Authentication is used in Ntrip networks to access RTCM streams or administer casters/servers \cite{NTRIP1} \cite{NTRIP2}.  If an attacker can determine a valid set of credentials they could either access restricted services (described in the false billing section) or configure a caster/server in a malicious manner.
+
+The Ntrip standards do not specify exactly how a caster/server must be implemented but they do state that administrators are responsible for registering devices with casters/servers.  If an attacker were to gain access to the administration interface he could register malicious servers with a legitimate caster or malicious sources with legitimate servers (which would propagate to the caster and client).
+
+Casters have the option of specifying basic or digest authentication methods for accessing sources.  An initial thought was that we would have to find a way to crack digest authentication in order to access the sources.  After analyzing the results of our scan however, it is clear that this isn't really necessary in the vast majority of cases (assuming that our sample data is representative of the entire population).  Only a single stream out of nearly 5000 was protected by digest authentication.  A wise attacker would obviously reach for the low hanging fruit and simply monitor the network to obtain the base64 encoded credentials which can be cracked in seconds using web based tools\cite{BASE64_DECODER}.  We tried this out on a reference implementation of a client and discovered that it works.
+
+Regarding the caster/server passwords we can't say how difficult it would be to obtain a set of credentials in every case.  The first Ntrip standard specifies that caster administration is performed using telnet which would be an easy target but the second version does not specify the exact administration method.  It is thus our recommendation that implementors choose a sufficiently secure authentication method in order to prevent against this type of attack.
 
 \section{Attack Taxonomy}
 
-\subsection{Navigational/Control Confusion}
+ \subsection{Economic Damage}
+ 
+ Almost all of the attack objectives outlined in this section will cause some level of economic damage.  An attacker could destroy automatically piloted vehicles, cause faulty surveys resulting in wasted effort or damage to structural integrity, make false charges to an Ntrip subscribers account, etc.
+ 
+Lax security in differential GNSS means that the high precision guarantees might not be guarantees at all.  If enough people were to catch on to this fact, the entire industry could suffer as a result.
 
-- Machine control
-- Maritime
+\subsection{Navigational Control Hijacking / Confusion}
+
+In our attack against a reference RTK implementation described in Section 7, we have found that it is possible to control a receiver's position calculations with some degree of accuracy.  This is possible by spoofing the reported X and Y coordinates of a reference station in message 1005 of the RTCM3 stream.  If a concrete receiver implementation exhibited similar behavior, it would be possible to control automated navigation systems that use Ntrip.  For example, if a receiver were reporting positions that were 1 foot to the West of its actual location, any software using this data to correct its position would adjust its course 1 foot to the East.  This attack could be used to confuse or even control automated navigation systems.
 
 \subsection{False Billing} 
-Depending on the billing model used, we could continually log in and download corrections under someone else's account.  The billing models we encountered were all flate rate charges (per month) but one could imagine other pay-per-use systems.
+
+Depending on the billing model used, an attacker could log excessive accesses to a legitimate user's account.  The billing models we encountered were all flat rate charges (per month) but one could imagine other pay-per-use systems.  For example, if a service provider charged a dollar for every MB of correction data downloaded, an attacker could cause financial damage to a subscriber.
 
 \subsection{Diversionary Attacks}
-The use of differential GPS in infrastructure and environmental monitoring projects \cite{UCSD_RTN}
 
-// TODO Find a reference for the infrastructure side
-
- creates an interesting class of attacks in which an adversary could signal false alarms from sensors to create diversions.  One might imagine a scenario in which an attacker transmits manipulated correction data in a manner that signals a collapsing bridge or an imminent hurricane.  
- 
- \subsection{Economic Damage}
-
-- Bad surveys/engineering plots etc.
-- Agriculture
+The use of differential GPS in infrastructure and environmental monitoring projects provides an interesting diversionary attack\cite{UCSD_RTN}.  Say an attacker wanted to destroy a bridge on the East side of a city without alerting authorities of his presence.  He could cause a monitoring device to report structural damage to a bridge on the west side of that city while suppressing alarms from the bridge being destroyed.  Depending on the level of response to such an alarm, authorities and resources would be diverted to the site of the false damage in the West while the attacker wreaked havoc in the East.  This is similar to Stuxnet's method of causing critical warning mechanisms to report that the system was performing normally\cite{STUXNET}. 
 
 \subsection{Location Privacy Violations}
-- Location Privacy Concerns for the clients.  Read Section 2.1.3 of the Ntrip 2 standard
 
-How many streams require digest authentication (STR records)?
-0
-
-How many streams require basic or no authentication?
-81
-
-How many streams require payment (STRM records)?
-10
-
-How many streams require no payment?
-71
-
-What are the different types of streams?
-GPSNet: 7
-GNSMART: 3
-Trimble NetRS: 41 (Berkley: 41)
-TPS Net-G3A: 30
-Trimble 5700: 1
+Section 2.1.3 of the Ntrip version 2 standard describes functionality in which a client transmits its location information to a caster so that the caster can provide location aware services.  An attacker who can monitor the network or who has control of a caster can thus observe the position of a client which may not be acceptable in certain circumstances.
 
 \section{An Attack on a Real Time Kinematics Engine}
 \section{Scope of Impact}
+
 \section{Future Work}
 
 Investigate how networks average error
 Find out if the corrupted corrections can be used to affect time calculations
 Investigate other DGPS protocols
 Run our attack on a real RTK receiver (not rtklib)  and see if we get similar results
+
+\section{Conclusion}
+
+We have discovered a Diffierential GNSS system that is widely used yet highly insecure.  It is important for all users and implementors of differential GNSS technologies to make security more of a priority as cyberphysical security is an area of active research and interest.
 
 \section{Thanks}
 

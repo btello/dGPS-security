@@ -1,16 +1,48 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{NTRIP_BC_INFO}
-Federal~Agency for Cartography and Gedesy (BKG).
+Federal~Agency for Cartography and Geodesy (BKG).
 \newblock Ntrip broadcaster information.
 \newblock \url{http://rtcm-ntrip.org/home.html}.
 \newblock Frankfurt, Germany.
+
+\bibitem{TRIMBLE_INF_MON}
+Trimble Navigation.
+\newblock Infrastructure deformation monitoring.
+\newblock
+  \url{http://www.trimble.com/infrastructure/deformation_monitoring.aspx}.
+
+\bibitem{TRIMBLE_MACH_CTRL}
+Trimble Navigation.
+\newblock Machine control.
+\newblock
+  \url{http://www.trimble.com/construction/heavy-and-highway/machine-control/}.
+
+\bibitem{BASE64_DECODER}
+opinionatedgeek.com.
+\newblock Base 64 decoder.
+\newblock \url{http://www.opinionatedgeek.com/dotnet/tools/base64decode/}.
+
+\bibitem{UCSD_RTN}
+Scripps Orbit and Permanent Array~Center at~UCSD.
+\newblock California real time network (crtn) description.
+\newblock \url{http://sopac.ucsd.edu/projects/realtime/description.html}.
+
+\bibitem{BLACKHAT:2011}
+D.~Perez and Pico J.
+\newblock A practical attack against gprs/edge/umts/hspa mobile data
+  communications.
+\newblock In {\em Proceedings of Blackhat DC 2011}, October 2011.
 
 \bibitem{NDGPS1}
 Gary Pruitt and Carl~Eric Fly.
 \newblock Ndgps assessment final report.
 \newblock Technical report, ARINC Incorporated for U.S. Department of
   Transportation, March 2008.
+
+\bibitem{NTRIP1}
+Radio Technical Commission on Maritime Services, Arlington, VA.
+\newblock {\em Networked Transport of RTM via Internet Protocol (Ntrip)}, 2004.
 
 \bibitem{RTCM3}
 Radio Technical Commission on Maritime Services, 1800 North Kent St. Suite 1060
@@ -21,5 +53,18 @@ Radio Technical Commission on Maritime Services, 1800 North Kent St. Suite 1060
 Radio Technical Commission on Maritime Services, Arlington, VA.
 \newblock {\em Networked Transport of RTCM via Internet Protocol (NTRIP version
   2.0)}, 2011.
+
+\bibitem{STUXNET}
+The Telegraph.
+\newblock How stuxnet works.
+\newblock
+  \url{http://www.telegraph.co.uk/technology/8274488/How-Stuxnet-works-what-the-forensic-evidence-reveals.html}.
+
+\bibitem{Uradzinski:2010}
+M.~Uradzinski, Jingnan Liu, and Weiping Jiang.
+\newblock Towards precise car navigation: Detection of relative vehicle
+  position on highway for collision avoidance.
+\newblock In {\em Ubiquitous Positioning Indoor Navigation and Location Based
+  Service (UPINLBS), 2010}, pages 1 --8, oct. 2010.
 
 \end{thebibliography}
