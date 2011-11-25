@@ -43,7 +43,7 @@ The Radio Technical Commission for Maritime Services (RTCM) is a non-profit orga
 First we will discuss the RTCM 10403.1 standard (Differential GNSS Services Version 3).  The 10403.1 standard defines a set of messages which contain the data required by Differential GNSS capable receivers\cite{RTCM3}.  The data defined by this standard is commonly referred to as just ``RTCM'', ``RTCM-104'', or ``RTCMv3''.  From this point on, we will refer to the data standard as RTCM unless it would be ambiguous in which case we will be careful to clarify the intended meaning.
 \newline
 \newline
-// TODO Put a table here that shows an example of an RTCM message and a blurb pointing to it in the previous paragraph
+// TODO Put a table here that shows an example of an RTCM message (RTCM1005.jpg is in this directory)
 \newline
 \newline
 
@@ -52,7 +52,7 @@ The second standard of interest is known as Ntrip (Networked Transport of RTCM o
 The primary objective of the Ntrip protocol is to transmit correction data from reference stations to receivers over the Internet.  Its architecture is similar to that of a streaming Internet radio service.  When a GNSS receiver wants to ``listen'' to a correction stream from a reference station, it requests the stream from a broadcast source which delivers the stream to the receiver in real time.  In Ntrip terminology a reference station is known as an Ntrip Source, a receiver is known as an Ntrip Client ,and a broadcaster is known as an Ntrip Caster.  An additional component known as an Ntrip server acts as a middle man between sources and casters.  The server aggregates data streams coming from sources and delivers them to casters which in turn aggregate several servers.
 \newline
 \newline
-// TODO Insert picture of the Ntrip architecture here.  It’s saved in your dropbox
+// TODO Insert picture of the Ntrip architecture here (ntripdiagram.jpg is in this folder)
 \newline
 
 The standard is relatively abstract in its definitions of these components so it is helpful to understand how they might be implemented in a real Ntrip network.  An Ntrip source is simply a pseudonym for GNSS reference stations such as the Trimble NetRS.  The device generates raw RTCM data which is uploaded to a server using one of several communications interfaces such as serial, TCP/IP, or various others (the Ntrip standard actually doesn’t define a communication interface between sources and servers).  An Ntrip server and an Ntrip caster are generally implemented as traditional software packages installed on one or more desktop/laptop computer(s).  Although they are defined as two logically separate entities, the server and caster can be implemented as part of the same program and still conform to the specification \cite{NTRIP2}.  A client is a piece of software at the end user's receiver which is trying to correct its position.  A client downloads a list of reachable devices from the caster.  The list of devices is called a source table and contains entries for other casters, networks, and correction streams from reference stations.  The Ntrip client downloads corrections and hands them off to the GNSS software which then applies them to an uncorrected position calculation in order to get a corrected, high precision, position. During our research we have found Ntrip client programs implemented on cell phones and devices known as data controllers, however, it would be perfectly reasonable to implement it directly on the receiver itself.
@@ -102,11 +102,7 @@ It should be noted that although this is a fair amount of data, it is likely onl
 
 \subsection{Man in the middle}
 
-The most serious attack vector we have identified is a man in the middle attack between casters and clients.  If a skilled adversary could convince a client to connect to his malicious caster using any number of network based man in the middle attacks 
-
-\cite{BLACKHAT:2011} 
-
-he could easily spoof the Ntrip protocol and trick the client into using corrupted correction data.  This attack is possible due to the lack of mutual authentication between clients and casters in the Ntrip protocol.
+The most serious attack vector we have identified is a man in the middle attack between casters and clients.  If a skilled adversary could convince a client to connect to his malicious caster using any number of network based man in the middle attack tools such as the freely available Cain and Abel or the GRPS, EDGE, UMTS, HSPA targeted attack described in  \cite{BLACKHAT:2011}  he could easily spoof the Ntrip protocol and trick the client into using corrupted correction data.  This attack is possible due to the lack of mutual authentication between clients and casters in the Ntrip protocol.
 
 We consider this the most dangerous of our attacks because it is equivalent to compromising the RTCM streams served by that caster.  This way, an attacker wouldn't have to worry about the receiver device ``averaging out'' a misbehaving stream (so far we have found no evidence of software that does this) as long as they spoofed all the streams to  misbehave identically.
 
@@ -145,6 +141,9 @@ The use of differential GPS in infrastructure and environmental monitoring proje
 Section 2.1.3 of the Ntrip version 2 standard describes functionality in which a client transmits its location information to a caster so that the caster can provide location aware services.  An attacker who can monitor the network or who has control of a caster can thus observe the position of a client which may not be acceptable in certain circumstances.
 
 \section{An Attack on a Real Time Kinematics Engine}
+
+// TODO Use the picture of the attack (controlledShiftUsingRTCM1005.jpg is in this folder)
+
 \section{Scope of Impact}
 
 \section{Future Work}
