@@ -9,7 +9,7 @@
 %%% Scribes: you must fill these in %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\lecdate}{November 23, 2011}
-\newcommand{\lectitle}{A Taxonomy of Vulnerabilities In Differential GPS}
+\newcommand{\lectitle}{Differential GPS Attack Surface Analysis}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -138,8 +138,6 @@ Our script considered the Ntrip network as a directed cyclic graph with a ``root
 The script we wrote performed a traversal to depth 1 in the graph, gathering statistics about each Ntrip source encountered including: device type, whether a fee is charged for accessing the source, and whether the device uses digest or basic authentication.  We chose to only go to depth 1 in the interest of time.  This gave us statistics on over 5000 source devices.  What we found is that only one of the streams required digest authentication, 867 of them assessed a fee, and that the Trimble NetRS was the most prevalent device found in the wild (22 percent of the devices we found were NetRS stations).
 
 It should be noted that although this is a fair amount of data, it is likely only a small sampling of the total population of Ntrip sources.  Our script identified 291 caster links which it simply ignored.  Since we only scanned 119 casters, one can imagine how much data is still available.   
-
-// TODO Insert some sort of chart summarizing the important security statistics (Should be able to generate one from the SourceStatistics.xls file contained in the repo)
 
 \subsection{Man in the middle}
 
@@ -319,7 +317,6 @@ The weaknesses seen in Ntrip bring into question the security of differential GP
 Dr. Georg Weber for providing helpful links and commentary on the adoption of Ntrip in geodetic equipment.
 Jeff Jalbrzikowski for providing valuable guidance regarding real life applications of Differential GPS and GPS in the context of Surveying.
 Tyler Nyswander for sharing his efforts in gaining root access to the NetRS device.
-Professor David Brumley for his guidance and access to resources.
 
 \section{Appendix A - Tables}
 
