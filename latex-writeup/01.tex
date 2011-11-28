@@ -185,12 +185,6 @@ Section 2.1.3 of the Ntrip version 2 standard describes functionality in which a
 
 \section{An Attack on a Real Time Kinematics Engine}
 
-\begin{figure}[h!]
-	\centering
-		\includegraphics[scale=0.3]{controlledShiftUsingRTCM1005.jpeg}\\
-	\caption{Correction Offset}
-\end{figure}
-
 \subsection{Attack Testbed}
 
 A Real Time Kinematics Engine is a program that receives correction data
@@ -199,12 +193,6 @@ present an attack against an RTK Engine as an example of a concrete example
 of a vulnerability in DGPS.  Before we go into details of the attack on a
 RTK Engine, we will first describe the testing environment we used.
 \newline
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[scale=0.50]{attack-diagram.png}
-	\caption{Attack Diagram}
-\end{figure}
 
 In order to show how our attack works, we needed to set up an environment
 eqivalent to that of a fully functioning Ntrip network.  We configured a
@@ -217,10 +205,17 @@ connection through the Linux virtual machine.
 
 \subsection{The Attack In Action}
 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.50]{attack-diagram.png}
+	\caption{Attack Diagram}
+\end{figure}
+
 The attack began with two pre-attack conditions.  We launched our attack
 while an Ntrip Caster was connected and exchanging data with an Ntrip
 Server.  Simultaneously, our attack happened while the same Ntrip Server
 was receiving streaming data from a NetRS mountpoint.
+
 
 The first stage of the attack was to exploit the NetRS mountpoint.  The
 NetRS device used an Apache module to run perl scripts through a web
@@ -245,6 +240,12 @@ data, the Ntrip Server reconnected to the NetRS and began to receive the
 RTCM3 data streamed by the mountpoint.  The data propagated to the Ntrip
 Caster where it waited for a connecting Ntrip Client to request this data.
 
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=0.3]{controlledShiftUsingRTCM1005.jpeg}\\
+	\caption{Correction Offset}
+\end{figure}
+
 When an Ntrip Client requested correction data from the compromised NetRS,
 a chain of events happened.  First, the client requested correction data
 from the Ntrip Caster about the NetRS mountpoint.  The Ntrip Caster
@@ -252,9 +253,9 @@ subsequently queries the Ntrip Server for the latest RTCM3 stream.  The
 Ntrip Server then sends the RTCM3 stream it is receiving from the
 compromised NetRS mountpoint to the caster, and the caster forwards the
 correction data to the client.  The Ntrip Client calculates its position
-based on this correction data.  Our attack successfully convinces the
-client that it is located at the given offset from its current location
-that we specified.  Figure three shows how a client is affected by the
+based on this correction data.  Our attack successfully shifts the client
+receiver by an amount directly proportional to the amount of our modification
+to the RTCM data.  Figure three shows how a client is affected by the
 attack with the red stream indicating the original path without corrections
 applied and the yellow paths indicating two different instances of streams
 of correction data from the compromised NetRS.
@@ -319,13 +320,10 @@ Dr. Georg Weber for providing helpful links and commentary on the adoption of Nt
 Jeff Jalbrzikowski for providing valuable guidance regarding real life applications of Differential GPS and GPS in the context of Surveying.
 Tyler Nyswander for sharing his efforts in gaining root access to the NetRS device.
 
-\bibliographystyle{plain}
-\bibliography{biblio}
-
 \section{Appendix A - Tables}
 
 \begin{center}
-\begin{tabular}{|m|m|}
+\begin{tabular}{|c|c|}
   \hline
   Manufacturer & Number of Devices \\
   \hline
@@ -372,11 +370,11 @@ Tyler Nyswander for sharing his efforts in gaining root access to the NetRS devi
   \hline
   Total & 5089\\
   \hline
-\end{tabular}
+\end{tabular}\\
 Table 1 - Number of Reference Station Devices by Manufacturer
+\vspace{10mm}
 
-
-\begin{tabular}{|m|m|}
+\begin{tabular}{|c|c|}
   \hline
   Trimble Device & Number of Devices\\
   \hline
@@ -421,10 +419,12 @@ Table 1 - Number of Reference Station Devices by Manufacturer
   \hline
   Trimble VRSNet & 444\\
   \hline
-\end{tabular}
+\end{tabular}\\
 Table 2 - Number and Types of Trimble Reference Stations
+\vspace{10 mm}
 
-\begin{tabular}{|m|m|}
+
+\begin{tabular}{|c|c|}
   \hline
   Devices w/ Basic Authentication & Devices w/ Digest Authentication\\
   \hline
@@ -432,9 +432,11 @@ Table 2 - Number and Types of Trimble Reference Stations
   4994 & 1\\
   \hline
 \end{tabular}
-Table 3 - Authentication Schemes of Reference Stations
 
-\begin{tabular}{|m|m|}
+Table 3 - Authentication Schemes of Reference Stations
+\vspace{10 mm}
+
+\begin{tabular}{|c|c|}
   \hline
   Streams Charging a Fee & Streams Charging No Fee\\
   \hline
@@ -442,11 +444,14 @@ Table 3 - Authentication Schemes of Reference Stations
   867 & 4129\\
   \hline
 \end{tabular}
+\\
+
 Table 4 - Billing Status of Ntrip Streams
 
 \end{center}
 
-
+\bibliographystyle{plain}
+\bibliography{biblio}
 \end{document}
 
 
