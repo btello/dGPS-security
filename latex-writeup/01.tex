@@ -297,8 +297,7 @@ to the attack outlined in this paper.
 Further digging also shows that the sources in the field are indeed vulnerable
 in other ways as well.  Out of the 4995 reference stations, 4994 use basic
 authentication with nothing more than base-64 encoding to protect username
-and passwords.  Only one reference stations uses the stronger digest
-authentication to provide any protection from snooping passwords.
+and passwords.  Only one reference stations uses the stronger digest authentication to provide any protection from snooping passwords.
 
 \section{Future Work}
 
@@ -310,7 +309,9 @@ We would also like to perform a security assessment of alternative DGPS standard
 
 \section{Conclusion}
 
-We have discovered a Diffierential GPS system that is widely used yet highly insecure.  It is important for all users and implementors of differential GPS technologies to make security more of a priority as cyberphysical security is an area of active research and interest.  
+We have discovered a Differential GPS system that is widely used yet highly insecure.  It is important for all users and implementors of differential GPS technologies to make security more of a priority as cyberphysical security is an area of active research and interest.  Ntrip, in particular, is used in many applications requiring DGPS for extremely accurate location measuring.  We showed many instances of users using Ntrip, provided a taxonomy of weaknesses, demonstrated an attack against an Ntrip network running an RTK Engine, and provided the scope of impact of these weaknesses.
+
+The weaknesses seen in Ntrip bring into question the security of differential GPS as a whole.  Many applications require DGPS, and the implications of an attacker with the capability to transmit arbitrary correction data that is accepted as correct by an end user could have dire consequences.  The addition of integrity monitors, mutual authentication, and encryption add additional security to DGPS and thwart many of the existing attacks.  We believe the unveiling of weaknesses in DGPS will spring forth an exciting research area, and shed light onto how to better secure DGPS.
 
 \section{Thanks}
 
