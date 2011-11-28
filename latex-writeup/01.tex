@@ -193,31 +193,89 @@ Section 2.1.3 of the Ntrip version 2 standard describes functionality in which a
 
 \subsection{Attack Testbed}
 
-Before we go into details of the attack on a Real Time Kinematics Engine, we will first describe the testing environment we used.
+A Real Time Kinematics Engine is a program that receives correction data
+and applies that data to calculate its known position.  In this section we
+present an attack against an RTK Engine as an example of a concrete example
+of a vulnerability in DGPS.  Before we go into details of the attack on a
+RTK Engine, we will first describe the testing environment we used.
+\newline
 
 \begin{figure}[h!]
-       \centering
-               \includegraphics[scale=0.50]{attack-diagram.png}\\
-       \caption{Attack Diagram}
+	\centering
+	\includegraphics[scale=0.50]{attack-diagram.png}
+	\caption{Attack Diagram}
 \end{figure}
 
-In order to show how our attack works, we needed to set up an environment eqivalent to that of a fully functioning Ntrip network.  We set up a Linux virtual machine running an FTP server and an official BKG\cite{NTRIP_BC_INFO} (the organization that created Ntrip) implementation of an Ntrip Caster and an Ntrip Server while the Windows 7 host machine was running an Ntrip Client.  We connect to the NetRS device over a TCP/IP connection through the virtual machine.
+In order to show how our attack works, we needed to set up an environment
+eqivalent to that of a fully functioning Ntrip network.  We configured a
+Linux virtual machine running an FTP server and a reference implementation
+of a caster and server, downloaded from BKG's official Ntrip
+site\cite{NTRIP_BC_INFO}. The Windows 7 host machine was running a program
+called RTKNAVI as the Ntrip client.  RTKNAVI uses the RTKLIB opensource
+library as an RTK engine.  We connect to the NetRS mountpoint over a TCP/IP
+connection through the Linux virtual machine.
 
-\subsection{The Attack}
+\subsection{The Attack In Action}
 
-The attack began with two pre-attack conditions.  We launched our attack while an Ntrip Caster was connected and exchanging data with an Ntrip Server.  Simultaneously, our attack happened while the same Ntrip Server was receiving streaming data from a NetRS mountpoint.
+The attack began with two pre-attack conditions.  We launched our attack
+while an Ntrip Caster was connected and exchanging data with an Ntrip
+Server.  Simultaneously, our attack happened while the same Ntrip Server
+was receiving streaming data from a NetRS mountpoint.
 
-The first stage of the attack was to exploit the NetRS mountpoint.  The NetRS device used an Apache module to run perl scripts through a web interface.  Using a custom perl script as a payload to the NetRS device, the attack machine successfully obtained a reverse shell on the mountpoint.  The next goal was to construct and load tools to the NetRS mountpoint.  The tools would launch a server on the NetRS to stream arbitrary RTCM3 correction data to a connecting Ntrip Server.  While on the NetRS device, a few observations were made and diagnosed on how to progress.
+The first stage of the attack was to exploit the NetRS mountpoint.  The
+NetRS device used an Apache module to run perl scripts through a web
+interface.  Using a custom perl script as a payload to the NetRS device,
+the attack machine successfully obtained a reverse shell on the mountpoint.
+ The next goal was to construct and load tools to the NetRS mountpoint.
+ The tools would launch a server on the NetRS to stream arbitrary RTCM3
+correction data to a connecting Ntrip Server.  While on the NetRS device, a
+few observations were made and diagnosed on how to progress.
 
-The NetRS was running on a PowerPC architecture with very few pre-installed programs, FTP being one.  To avoid cross-compilation issues and bypass the lack of a Perl, Python, Ruby, Java, etc. interpreter, we decided to leverage the use of the Apache Perl Module that we used to get the remote shell.  After designing a Perl script to accomplish the next stage of our attack, we opened an FTP session from the NetRS to the attacking machine to load this tool.  The last stage of our attack was to execute the script via the Apache Perl Module by accessing it through the NetRS web interface.
+The NetRS was running on a PowerPC architecture with very few pre-installed
+programs, FTP being one.  To avoid cross-compilation issues and bypass the
+lack of a Perl, Python, Ruby, Java, etc. interpreter, we decided to
+leverage the use of the Apache Perl Module that we used to get the remote
+shell.  After designing a Perl script to accomplish the next stage of our
+attack, we opened an FTP session from the NetRS to the attacking machine to
+load this tool.  The last stage of our attack was to execute the script via
+the Apache Perl Module by accessing it through the NetRS web interface.
 
-After the NetRS was configured to send the custom-made RTCM3 correction data, the Ntrip Server reconnected to the NetRS and began to receive the RTCM3 data streamed by the mountpoint.  The data propagated to the Ntrip Caster where it waited for a connecting Ntrip Client to request this data.
+After the NetRS was configured to send the custom-made RTCM3 correction
+data, the Ntrip Server reconnected to the NetRS and began to receive the
+RTCM3 data streamed by the mountpoint.  The data propagated to the Ntrip
+Caster where it waited for a connecting Ntrip Client to request this data.
 
-When an Ntrip Client requested correction data from the compromised NetRS, a chain of events happened.  First, the client requested correction data from the Ntrip Caster about the NetRS mountpoint.  The Ntrip Caster subsequently queries the Ntrip Server for the latest RTCM3 stream.  The Ntrip Server then sends the RTCM3 stream it is receiving from the compromised NetRS mountpoint to the caster, and the caster forwards the correction data to the client.  The Ntrip Client recalculates its position based on this correction data.  Our attack successfully convinces the client that it is located at the given offset from its current location that we specified.  Figure three shows how a client is affected by the attack with the red stream indicating the original path without corrections applied and the yellow paths indicating two different instances of streams of correction data from the compromised NetRS.
+When an Ntrip Client requested correction data from the compromised NetRS,
+a chain of events happened.  First, the client requested correction data
+from the Ntrip Caster about the NetRS mountpoint.  The Ntrip Caster
+subsequently queries the Ntrip Server for the latest RTCM3 stream.  The
+Ntrip Server then sends the RTCM3 stream it is receiving from the
+compromised NetRS mountpoint to the caster, and the caster forwards the
+correction data to the client.  The Ntrip Client calculates its position
+based on this correction data.  Our attack successfully convinces the
+client that it is located at the given offset from its current location
+that we specified.  Figure three shows how a client is affected by the
+attack with the red stream indicating the original path without corrections
+applied and the yellow paths indicating two different instances of streams
+of correction data from the compromised NetRS.
 
-\subsection{What This Attack Means}
+\subsection{Attack Mitigations}
 
-In our attack, we saw that we can send arbitrary correction data from a mountpoint that will travel through an Ntrip network to affect a client requesting GPS correction data.  A client is directly affected by RTCM3 correction data that we send from the NetRS device and can be tricked into recalculating its own position.  A stronger and simpler attack would be to masquarade via a Man in the Middle attack as an Ntrip Caster due to the lack of mutual authentication.  We do not go into the specific details of a MitM attack since much research is done in this area and the attack is trivial.
+The Ntrip network should be resilient to attack for reliable GPS correction
+data.  One technique that could reduce the impact of the aforementioned
+attack would be the use of an integrity monitor.  The integrity monitor
+would make sure that correction data is within a a specified bound.  Having
+an integrity monitor would catch correction data outside the given good
+bound from either an attack or a malfunctioning device.  The Coast Guard's
+NDGPS makes use of integrity monitors\cite{NDGPS1}.
+
+All authentication traffic should be encrypted.  Allowing passwords to be
+transmitted in plaintext or base-64 encoding should be eliminated from the
+Ntrip system.  Also, mutual authentication should occur between entities in
+the Ntrip network to thwart Man in the Middle attacks.
+
+Future research should include additional research into attack mitigations
+as well as their effect on the Ntrip network.
 
 \section{Scope of Impact}
 
