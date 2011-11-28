@@ -1,27 +1,27 @@
-\BOOKMARK [1][]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][]{section.2}{Differential GPS}{}% 2
-\BOOKMARK [1][]{section.3}{RTCM and Ntrip}{}% 3
-\BOOKMARK [1][]{section.4}{Sample Applications}{}% 4
-\BOOKMARK [2][]{subsection.4.1}{Machine Control}{section.4}% 5
-\BOOKMARK [2][]{subsection.4.2}{Navigation}{section.4}% 6
-\BOOKMARK [2][]{subsection.4.3}{Surveying}{section.4}% 7
-\BOOKMARK [2][]{subsection.4.4}{Infrastructure Monitoring}{section.4}% 8
-\BOOKMARK [2][]{subsection.4.5}{Early Warning Systems}{section.4}% 9
-\BOOKMARK [1][]{section.5}{Attack Vectors}{}% 10
-\BOOKMARK [2][]{subsection.5.1}{Security Statistics}{section.5}% 11
-\BOOKMARK [2][]{subsection.5.2}{Man in the middle}{section.5}% 12
-\BOOKMARK [2][]{subsection.5.3}{Authentication Spoofing}{section.5}% 13
-\BOOKMARK [1][]{section.6}{Attack Taxonomy}{}% 14
-\BOOKMARK [2][]{subsection.6.1}{Economic Damage}{section.6}% 15
-\BOOKMARK [2][]{subsection.6.2}{Navigational Control Hijacking / Confusion}{section.6}% 16
-\BOOKMARK [2][]{subsection.6.3}{False Billing}{section.6}% 17
-\BOOKMARK [2][]{subsection.6.4}{Diversionary Attacks}{section.6}% 18
-\BOOKMARK [2][]{subsection.6.5}{Location Privacy Violations}{section.6}% 19
-\BOOKMARK [1][]{section.7}{An Attack on a Real Time Kinematics Engine}{}% 20
-\BOOKMARK [2][]{subsection.7.1}{Attack Testbed}{section.7}% 21
-\BOOKMARK [2][]{subsection.7.2}{The Attack}{section.7}% 22
-\BOOKMARK [2][]{subsection.7.3}{What This Attack Means}{section.7}% 23
-\BOOKMARK [1][]{section.8}{Scope of Impact}{}% 24
-\BOOKMARK [1][]{section.9}{Future Work}{}% 25
-\BOOKMARK [1][]{section.10}{Conclusion}{}% 26
-\BOOKMARK [1][]{section.11}{Thanks}{}% 27
+\BOOKMARK [1][]{section.1}{Introduction}{}
+\BOOKMARK [1][]{section.2}{Differential GPS}{}
+\BOOKMARK [1][]{section.3}{RTCM and Ntrip}{}
+\BOOKMARK [1][]{section.4}{Sample Applications}{}
+\BOOKMARK [2][]{subsection.4.1}{Machine Control}{section.4}
+\BOOKMARK [2][]{subsection.4.2}{Navigation}{section.4}
+\BOOKMARK [2][]{subsection.4.3}{Surveying}{section.4}
+\BOOKMARK [2][]{subsection.4.4}{Infrastructure Monitoring}{section.4}
+\BOOKMARK [2][]{subsection.4.5}{Early Warning Systems}{section.4}
+\BOOKMARK [1][]{section.5}{Attack Vectors}{}
+\BOOKMARK [2][]{subsection.5.1}{Security Statistics}{section.5}
+\BOOKMARK [2][]{subsection.5.2}{Man in the middle}{section.5}
+\BOOKMARK [2][]{subsection.5.3}{Authentication Spoofing}{section.5}
+\BOOKMARK [1][]{section.6}{Attack Taxonomy}{}
+\BOOKMARK [2][]{subsection.6.1}{Economic Damage}{section.6}
+\BOOKMARK [2][]{subsection.6.2}{Navigational Control Hijacking / Confusion}{section.6}
+\BOOKMARK [2][]{subsection.6.3}{False Billing}{section.6}
+\BOOKMARK [2][]{subsection.6.4}{Diversionary Attacks}{section.6}
+\BOOKMARK [2][]{subsection.6.5}{Location Privacy Violations}{section.6}
+\BOOKMARK [1][]{section.7}{An Attack on a Real Time Kinematics Engine}{}
+\BOOKMARK [2][]{subsection.7.1}{Attack Testbed}{section.7}
+\BOOKMARK [2][]{subsection.7.2}{The Attack}{section.7}
+\BOOKMARK [2][]{subsection.7.3}{What This Attack Means}{section.7}
+\BOOKMARK [1][]{section.8}{Scope of Impact}{}
+\BOOKMARK [1][]{section.9}{Future Work}{}
+\BOOKMARK [1][]{section.10}{Conclusion}{}
+\BOOKMARK [1][]{section.11}{Thanks}{}
