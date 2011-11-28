@@ -39,6 +39,7 @@ bookmarksopen= {true}
 
 \section{Differential GPS}
 
+
 Differential GPS or DGPS is a method for increasing the accuracy of ordinary
 GPS.  Several factors contribute to error in GPS with a single receiver.  These
 include ionospheric refraction of the GPS signal, noise, clock errors, and other
@@ -49,22 +50,19 @@ then transmits this difference to the roving receiver, which applies the
 information to its position calculation.  The result is a more accurate
 position calculation for the rover.  Applying DGPS to ordinary GPS can cause
 the accuracy to improve from about 15 meters of error to about 2-3 centimeters
-of error \cite{RTKWhitePaper} \cite{NTRIP1}.
+of error in the best case \cite{RTKWhitePaper} \cite{NTRIP1}.
 
 DGPS is a term that applies to all types of GPS that have two or more receivers
-for more accurate readings, but can be broken down into two categories.
-DGPS is usually the term usually applied to the types of Differential GPS that
-obtain meter level accuracy of readings.  Kinematic GPS, such as Post-Processed
-Kinematic GPS and Real-Time Kinematic GPS are a different kind of DGPS that
-can obtain accuracy within the centimeter level.
-
-Kinematic GPS and DGPS share the same idea of using two receivers, but are
-different in many ways.  Kinematic GPS takes about a minute to initialize and
-requires five satellites to work properly.  This is compared to the instant
-initialization of DGPS and the three to four satellites required to function.
-Kinematic GPS measures differences in the high frequency carrier wave of GPS
-to determine centimeter level accuracy as opposed to DGPS which uses the lower
-frequency code phase methods for obtaining meter level accuracy.
+for more accurate readings, but can be broken down into two categories, DGPS and
+Kinematic GPS.  DGPS is the term usually applied to the types of Differential GPS 
+that obtain meter level accuracy of readings.  Kinematic GPS is a different kind
+of DGPS that can obtain accuracy within a few centimeters \cite{Heave}.  
+Kinematic GPS requires five satellites to work properly and takes a minute to
+initialize.  This is compared to the three or four satellites required to run
+DGPS and no initialization time \cite{RTKWhitePaper}.  Though some of the
+attacks described in this paper exploit Kinematic GPS, the term Differential
+GPS or DGPS will be used to refer to the general idea of using more than one
+receiver to calculate more accurate position.
 
 \section{RTCM and Ntrip}
 
