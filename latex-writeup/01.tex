@@ -34,6 +34,20 @@ bookmarksopen= {true}
 \begin{document}
 \maketitle
 
+\begin{abstract}
+
+Differential GPS, provides many modern systems with more accurate time and 
+position information than regular GPS alone, but this extra accuracy comes at 
+a cost of lowered security.  This paper analyzes the attack surface of DGPS
+through studying a protocol that caries Differential GPS data, Ntrip, and 
+groups the results into attack vectors and objectives.  We then give a 
+concrete example of an attack against a DGPS network that causes a GPS receiver
+to calculate changes in its position proportional to the corrupted input.
+We discuss the impact of an attack on several applications which use DGPS
+as well as possible mitigations to increase the security of DGPS.
+
+\end{abstract}
+
 \section{Introduction}
 
 Modern civilian GPS receivers are capable of calculating their position on the Earth with accuracies on the order of meters.  This level of accuracy is not sufficient for many applications and thus a technique called differential GPS has been developed which provides sub-meter accuracy or better if configured properly.
