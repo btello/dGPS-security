@@ -38,16 +38,14 @@ bookmarksopen= {true}
 
 Modern civilian GPS receivers are capable of calculating their position on the Earth with accuracies on the order of meters.  This level of accuracy is not sufficient for many applications and thus a technique called differential GPS has been developed which provides sub-meter accuracy or better if configured properly.
 
-Due to the nature of differential GPS systems, as discussed in Section 2, they often transmit positioning data over land based communication networks such as the Internet which makes them vulnerable to traditional network based attacks.  In this paper, we provide a list of attack vectors against a differential GPS system as well as a list of objectives that an attacker might have when targeting a differential GPS system.  We also discuss a concrete attack against a reference implementation of a differential GPS engine called rtknavi.  In our attack we were able to successfully control a GPS receivers reported position with some degree of accuracy by corrupting only differential GPS corrections.
+Due to the nature of differential GPS systems, as discussed in Section 2, they often transmit positioning data over land based communication networks, such as the Internet, which makes them vulnerable to traditional network based attacks.  In this paper, we provide a list of attack vectors against a differential GPS system as well as a list of objectives that an attacker might have when targeting a differential GPS system.  We also discuss a concrete attack against a reference implementation of a differential GPS engine called RTKNAVI.  In our attack we were able to successfully control a GPS receiver's reported position with some degree of accuracy by corrupting only differential GPS corrections.
 
 In Section 2, we discuss differential GPS more thoroughly.  In section 3, we cover the standards which define the structure and transportation mechanisms for the data required in a differential GPS network.  Section 4 lists real applications of differential GPS systems.  Section 5 presents attack vectors against  a differential GPS network followed by a listing of speculative attack objectives in Section 6.  Our attack implementation is covered in Section 7 and the final part of our security analysis is in Section 8 where we discuss the Scope of Impact of our findings.
 
 \section{Differential GPS}
 
-
 Differential GPS or DGPS is a method for increasing the accuracy of ordinary
-GPS.  Several factors contribute to error in GPS with a single receiver.  These
-include ionospheric refraction of the GPS signal, noise, clock errors, and other
+GPS.  Several factors contribute to error in GPS with a single receiver: ionospheric refraction of the GPS signal, noise, clock errors, and other
 sources.  The idea behind DGPS is that a second receiver called a reference
 station is placed in a known location and can measure the error between
 the expected signal and the signal actually received.  The reference station
@@ -67,13 +65,13 @@ initialize.  This is compared to the three or four satellites required to run
 DGPS and no initialization time \cite{RTKWhitePaper}.  Though some of the
 attacks described in this paper exploit Kinematic GPS, the term Differential
 GPS or DGPS will be used to refer to the general idea of using more than one
-receiver to calculate more accurate position.
+receiver to calculate a more accurate position.
 
 \section{RTCM and Ntrip}
 
 The Radio Technical Commission for Maritime Services (RTCM) is a non-profit organization comprised of both government and non-government bodies that publishes standards related to several topics including differential GPS.   RTCM’s Special Committee 104 publishes two standards which we focused on in our research.  
 
-First we will discuss the RTCM 10403.1 standard (Differential GNSS Services Version 3).  The 10403.1 standard defines a set of messages which contain the data required by Differential GPS capable receivers\cite{RTCM3}.  The data defined by this standard is commonly referred to as just ``RTCM'', ``RTCM-104'', or ``RTCMv3''.  From this point on, we will refer to the data standard as RTCM unless it would be ambiguous in which case we will be careful to clarify the intended meaning.
+First we will discuss the RTCM 10403.1 standard (Differential GNSS Services Version 3).  The 10403.1 standard defines a set of messages which contain the data required by Differential GPS capable receivers\cite{RTCM3}.  The data defined by this standard is commonly referred to as just ``RTCM'', ``RTCM-104'', or ``RTCMv3''.  From this point on, we will refer to the data standard as RTCM unless it would be ambiguous, in which case we will be careful to clarify the intended meaning.
 \newline
 
 \begin{figure}[h!]
@@ -84,10 +82,9 @@ First we will discuss the RTCM 10403.1 standard (Differential GNSS Services Vers
 
 The second standard of interest is known as Ntrip (Networked Transport of RTCM over Internet Protocol) which is also published by the RTCM Special Committee 104.  Ntrip is an application layer networking protocol designed to stream RTCM correction data over the Internet.  A feature of Ntrip that seems to be popular is that it can transmit corrections over cellular data networks such as GPRS and EDGE, thus allowing corrections to be downloaded in very remote locations.  After conducting a survey of commercial GPS devices and conducting brief interviews with sources close to the development of Ntrip we have come to the conclusion that most commercial GPS reference stations are equipped with the capability to transmit RTCM correction data over Ntrip.  Furthermore, it has a wide variety of use cases which will be discussed in Section 4. The technical details of the protocol are contained in the following paragraphs.
 
-The primary objective of the Ntrip protocol is to transmit correction data from reference stations to receivers over the Internet.  Its architecture is similar to that of a streaming Internet radio service.  When a GPS receiver wants to ``listen'' to a correction stream from a reference station, it requests the stream from a broadcast source which delivers the stream to the receiver in real time.  In Ntrip terminology a reference station is known as an Ntrip Source, a receiver is known as an Ntrip Client, and a broadcaster is known as an Ntrip Caster.  An additional component known as an Ntrip Server acts as a middle man between sources and casters.  The server aggregates data streams coming from sources and delivers them to casters which in turn aggregate several servers.
-\newline
+The primary objective of the Ntrip protocol is to transmit correction data from reference stations to receivers over the Internet.  Its architecture is similar to that of a streaming Internet radio service.  When a GPS receiver wants to ``listen'' to a correction stream from a reference station, it requests the stream from a broadcast source which delivers the stream to the receiver in real time.  In Ntrip terminology a reference station is known as an Ntrip Source or mountpoint, a receiver is known as an Ntrip Client, and a broadcaster is known as an Ntrip Caster.  An additional component known as an Ntrip Server acts as a middle man between sources and casters.  The server aggregates data streams coming from sources and delivers them to casters which in turn aggregate several servers.
 
-The standard is relatively abstract in its definitions of these components so it is helpful to understand how they might be implemented in a real Ntrip network.  An Ntrip source is simply a pseudonym for a GPS reference station such as the Trimble NetRS on which we conducted our experiments.  The device generates raw RTCM data which is uploaded to a server using one of several communications interfaces such as serial, TCP/IP, or various others (the Ntrip standard actually doesn’t define a communication interface between sources and servers).  An Ntrip Server and an Ntrip Caster are generally implemented as traditional software packages installed on one or more desktop/laptop computer(s).  Although they are defined as two logically separate entities, the server and caster can be implemented as part of the same program and still conform to the specification \cite{NTRIP2}.  A client is a piece of software at the end users receiver which is trying to correct its position.  A client downloads a list of reachable devices from the caster.  The list of devices is called a source table and contains entries for other casters, networks, and correction streams.  The Ntrip client downloads corrections and hands them off to the GPS software which then applies them to an uncorrected position in order to get a corrected, high precision, position. During our research we have found Ntrip client programs implemented on cell phones and devices known as data controllers, however, it would be perfectly reasonable to implement it directly on the receiver itself.
+The standard is relatively abstract in its definitions of these components so it is helpful to understand how they might be implemented in a real Ntrip network.  An Ntrip source is simply a pseudonym for a GPS reference station such as the Trimble NetRS on which we conducted our experiments.  The device generates raw RTCM data which is uploaded to a server using one of several communications interfaces such as serial, TCP/IP, or various others (the Ntrip standard actually doesn't define a communication interface between sources and servers).  An Ntrip Server and an Ntrip Caster are generally implemented as traditional software packages installed on one or more desktop/laptop computer(s).  Although they are defined as two logically separate entities, the server and caster can be implemented as part of the same program and still conform to the specification \cite{NTRIP2}.  A client is a piece of software at the end user's receiver which is trying to correct its position.  A client downloads a list of reachable devices from the caster.  The list of devices is called a source table and contains entries for other casters, networks, and correction streams.  The Ntrip client downloads corrections and hands them off to the GPS software which then applies them to an uncorrected position in order to get a corrected, high precision, position. During our research we have found Ntrip client programs implemented on cell phones and devices known as data controllers, however, it would be perfectly reasonable to implement it directly on the receiver itself.
 
 
 \begin{figure}[h!]
@@ -139,11 +136,9 @@ The script we wrote performed a traversal to depth 1 in the graph, gathering sta
 
 It should be noted that although this is a fair amount of data, it is likely only a small sampling of the total population of Ntrip sources.  Our script identified 291 caster links which it simply ignored.  Since we only scanned 119 casters, one can imagine how much data is still available.   
 
-// TODO Insert some sort of chart summarizing the important security statistics (Should be able to generate one from the SourceStatistics.xls file contained in the repo)
-
 \subsection{Man in the middle}
 
-The most serious attack vector we have identified is a man in the middle attack between casters and clients.  If a skilled adversary could convince a client to connect to his malicious caster using any number of network based man in the middle attack tools such as the freely available Cain and Abel or the GRPS, EDGE, UMTS, HSPA targeted attack described in  \cite{BLACKHAT:2011}  he could easily spoof the Ntrip protocol and trick the client into using corrupted correction data.  This attack is possible due to the lack of mutual authentication between clients and casters in the Ntrip protocol.
+The most serious attack vector we have identified is a Man in the Middle attack between casters and clients.  If a skilled adversary could convince a client to connect to his malicious caster using any number of network based Man in the Middle attack tools such as the freely available Cain and Abel or the GRPS, EDGE, UMTS, HSPA targeted attack described in  \cite{BLACKHAT:2011}  he could easily spoof the Ntrip protocol and trick the client into using corrupted correction data.  This attack is possible due to the lack of mutual authentication between clients and casters in the Ntrip protocol.
 
 We consider this the most dangerous of our attacks because it is equivalent to compromising the RTCM streams served by that caster.  This way, an attacker wouldn't have to worry about the receiver device ``averaging out'' a misbehaving stream (so far we have found no evidence of software that does this) as long as they spoofed all the streams to  misbehave identically.
 
@@ -215,7 +210,6 @@ The attack began with two pre-attack conditions.  We launched our attack
 while an Ntrip Caster was connected and exchanging data with an Ntrip
 Server.  Simultaneously, our attack happened while the same Ntrip Server
 was receiving streaming data from a NetRS mountpoint.
-
 
 The first stage of the attack was to exploit the NetRS mountpoint.  The
 NetRS device used an Apache module to run perl scripts through a web
