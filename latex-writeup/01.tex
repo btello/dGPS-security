@@ -109,7 +109,7 @@ Machine control is a sector of the GPS industry which aims to make construction 
 
 \subsection{Navigation}
 
-Real time maritime and aerial navigation are two applications which are especially interesting.  During the course of our research, we were unable to find any specific instances of Ntrip in use in either arena.  We do know, however, that the NetRS device can be configured to function as a Wide Area Augmentation System (WAAS) reference station.  Since we have shown that the NetRS is vulnerable to compromise, this probably isn't a good thing.  The NDGPS assessment report contains an excellent list of real world applications of Differential GPS in the navigation domain \cite{NDGPS1}.
+Real time maritime and aerial navigation are two applications which are especially interesting.  Aerial navigation uses a differential GPS system called the Wide Area Augmentation system.  During our research of the NetRS device, we noticed that it can be configured to function as a WAAS reference station.  Since we have shown that the NetRS is vulnerable to compromise, this probably isn't a good thing.  The NDGPS assessment report contains an excellent list of real world applications of Differential GPS in the navigation domain \cite{NDGPS1}.
 
 Automating your steering wheel is another interesting area in which high precision GPS could be used.  In \cite{Uradzinski:2010}, the use of Ntrip based RTK solutions was investigated for its use in automated collision avoidance for land based automobiles.  While this was only a research study, it shows that there are people who are interested in applying this technology to automated land based vehicle navigation.  Another example of such a system is the Cooperative Intersection Collision Avoidance System (CICAS) run by the US Dept. of Transportation and described in \cite{NDGPS1}
 
@@ -301,17 +301,17 @@ and passwords.  Only one reference stations uses the stronger digest authenticat
 
 \section{Future Work}
 
-Investigate how networks average error
-Find out if the corrupted corrections can be used to affect time calculations
-Investigate other DGPS protocols
-Run our attack on a real RTK receiver (not rtklib)  and see if we get similar results
-Investigate whether or not any real life attacks against differential GPS have ever occurred and what the objectives were.
+During the course of this research, a lot of questions came up that we simply didn't have enough time to answer.  In the future, we would like do further research into Virtual Reference Station networks which are networks of reference stations serving to provide even more precise position data over a wider geographical area.  We are interested in whether these networks would "average out" corrupted correction streams or not.
+
+We were also unable to determine whether or not differential corrections are applied to a receivers time calculations or not.  This would certainly be an important area of focus for future research.
+
+We would also like to perform a security assessment of alternative DGPS standards such as the NDGPS, WAAS, and others as well as investigate whether or not any real life attacks against differential GPS have ever occurred and what the objectives were.
 
 \section{Conclusion}
 
 We have discovered a Differential GPS system that is widely used yet highly insecure.  It is important for all users and implementors of differential GPS technologies to make security more of a priority as cyberphysical security is an area of active research and interest.  Ntrip, in particular, is used in many applications requiring DGPS for extremely accurate location measuring.  We showed many instances of users using Ntrip, provided a taxonomy of weaknesses, demonstrated an attack against an Ntrip network running an RTK Engine, and provided the scope of impact of these weaknesses.
 
-The weaknesses seen in Ntrip are disturbing, and we believe we are the first to bring the weaknesses of DGPS and their associated impact to light.  Many applications require DGPS, and the implications of an attacker with the capability to transmit arbitrary correction data that is accepted as correct by an end user could have dire consequences.  The addition of integrity monitors, mutual authentication, and encryption add additional security to DGPS and thwart many of the existing attacks.  We believe the unveiling of weaknesses in DGPS will spring forth an exciting research area, and shed light onto how to better secure DGPS.
+The weaknesses seen in Ntrip bring into question the security of differential GPS as a whole.  Many applications require DGPS, and the implications of an attacker with the capability to transmit arbitrary correction data that is accepted as correct by an end user could have dire consequences.  The addition of integrity monitors, mutual authentication, and encryption add additional security to DGPS and thwart many of the existing attacks.  We believe the unveiling of weaknesses in DGPS will spring forth an exciting research area, and shed light onto how to better secure DGPS.
 
 \section{Thanks}
 
