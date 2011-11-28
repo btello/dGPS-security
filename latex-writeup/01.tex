@@ -180,10 +180,12 @@ Section 2.1.3 of the Ntrip version 2 standard describes functionality in which a
 
 \section{An Attack on a Real Time Kinematics Engine}
 
-\begin{center}
-	\includegraphics[scale=0.4]{controlledShiftUsingRTCM1005.jpeg}\\
-\end{center}
-
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=0.3]{controlledShiftUsingRTCM1005.jpeg}\\
+	\caption{Correction Offset}
+\end{figure}
+	
 \subsection{Attack Testbed}
 
 Before we go into details of the attack on a Real Time Kinematics Engine, we will first describe the testing environment we used.
@@ -201,17 +203,13 @@ In order to show how our attack works, we needed to set up an environment eqival
 
 The attack began with two pre-attack conditions.  We launched our attack while an Ntrip Caster was connected and exchanging data with an Ntrip Server.  Simultaneously, our attack happened while the same Ntrip Server was receiving streaming data from a NetRS mountpoint.
 
-The first stage of the attack was to exploit the NetRS mountpoint.  The NetRS device used an Apache module to run perl scripts through a web interface.  Using a custom perl script as a payload to the NetRS device, the attack machine successfully obtained a reverse shell on the mountpoint.  While on the NetRS device, a few observations were made and diagnosed on how to progress.
+The first stage of the attack was to exploit the NetRS mountpoint.  The NetRS device used an Apache module to run perl scripts through a web interface.  Using a custom perl script as a payload to the NetRS device, the attack machine successfully obtained a reverse shell on the mountpoint.  The next goal was to construct and load tools to the NetRS mountpoint.  The tools would launch a server on the NetRS to stream arbitrary RTCM3 correction data to a connecting Ntrip Server.  While on the NetRS device, a few observations were made and diagnosed on how to progress.
 
-The NetRS was running on a PowerPC architecture with very few pre-installed programs.  Since the attack machine uses x86, we would have to cross 
+The NetRS was running on a PowerPC architecture with very few pre-installed programs, FTP being one.  To avoid cross-compilation issues and bypass the lack of a Perl, Python, Ruby, Java, etc. interpreter, we decided to leverage the use of the Apache Perl Module that we used to get the remote shell.  After designing a Perl script to accomplish the next stage of our attack, we opened an FTP session from the NetRS to the attacking machine to load this tool.  The last stage of our attack was to execute the script via the Apache Perl Module by accessing it through the NetRS web interface.
 
-To setup our attack scenario we configure an Ntrip Caster and an Ntrip Server to communicate together.  The Ntrip Server is configured to receive streaming data from the NetRS device and to forward that data to the Ntrip Caster.  The Ntrip Caster is configured to receive mountpoint information from the Ntrip Server and to forward the correction information for a given mountpoint to a client that has the proper credentials, username: user and password: prettyplease.
+After the NetRS was configured to send the custom-made RTCM3 correction data, the Ntrip Server reconnected to the NetRS and began to receive the RTCM3 data streamed by the mountpoint.  The data propagated to the Ntrip Caster where it waited for a connecting Ntrip Client to request this data.
 
-First, we must compromise the NetRS device in our attack.  The NetRS runs an Apache web service for remote access to the NetRS machine.  By launching a carefully constructed payload against the NetRS, we gain a reverse shell to the NetRS device.  We can then upgrade our privileges to root and set the associated partition we want to load our tools to as writeable.
-
-The NetRS device does not contain many precompiled programs, e.g. Python interpreter, Perl interpreter, whoami, emacs, etc, and is running on a PowerPC architecture.  The NetRS does have the FTP program, and we load our exploit script by connecting to the running FTP server on our attack machine and sending the script over the TCP/IP connection.  Also, the Apache web service runnning on the NetRS can run perl programs meant for CGI scripts rather than just having a Perl interpreter.  In order to avoid cross-compilation issues and to simplify the attack, we use the Apache web service to run our custom perl exploit script.
-
-Our exploit script acts as a normal Ntrip Source that sends out RTCM3 correction data.  In our attack, we customize the RTCM3 stream of data to correct positions to six meters off of its normal location.  We launch the perl server by sending a query to our perl script via the webserver and establish a connection to the NetRS device with the Ntrip Server.  The Ntrip server receives the correction stream and updates the associated mountpoint in the Ntrip Caster.  When the Ntrip Client connects to the Ntrip Caster and asks for correction data about the compromised mountpoint, the client receives correction data that is six meters off of its actual location.  The client accepts this information and recalculates its position to be six meters off of its actual location.
+When an Ntrip Client requested correction data from the compromised NetRS, a chain of events happened.  First, the client requested correction data from the Ntrip Caster about the NetRS mountpoint.  The Ntrip Caster subsequently queries the Ntrip Server for the latest RTCM3 stream.  The Ntrip Server then sends the RTCM3 stream it is receiving from the compromised NetRS mountpoint to the caster, and the caster forwards the correction data to the client.  The Ntrip Client recalculates its position based on this correction data.  Our attack successfully convinces the client that it is located at the given offset from its current location that we specified.  Figure three shows how a client is affected by the attack with the red stream indicating the original path without corrections applied and the yellow paths indicating two different instances of streams of correction data from the compromised NetRS.
 
 \subsection{Attack Mitigations}
 
