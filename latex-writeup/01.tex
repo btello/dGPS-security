@@ -73,20 +73,27 @@ The Radio Technical Commission for Maritime Services (RTCM) is a non-profit orga
 
 First we will discuss the RTCM 10403.1 standard (Differential GNSS Services Version 3).  The 10403.1 standard defines a set of messages which contain the data required by Differential GNSS capable receivers\cite{RTCM3}.  The data defined by this standard is commonly referred to as just ``RTCM'', ``RTCM-104'', or ``RTCMv3''.  From this point on, we will refer to the data standard as RTCM unless it would be ambiguous in which case we will be careful to clarify the intended meaning.
 \newline
-\newline
-// TODO Put a table here that shows an example of an RTCM message (RTCM1005.jpg is in this directory)
-\newline
-\newline
+
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=0.60]{RTCM1005.jpg}
+	\caption{An Example of an RTCM Message}
+\end{figure}
 
 The second standard of interest is known as Ntrip (Networked Transport of RTCM over Internet Protocol) which is also published by the RTCM Special Committee 104.  Ntrip is an application layer networking protocol designed to stream RTCM correction data over the Internet.  A feature of Ntrip that seems to be popular is that it can transmit corrections over cellular data networks such as GPRS and EDGE, thus allowing corrections to be downloaded in very remote locations.  After conducting a survey of commercial GNSS devices and conducting brief interviews with sources close to the development of Ntrip we have come to the conclusion that most commercial GNSS reference stations are equipped with the capability to transmit RTCM correction data over Ntrip.  Furthermore, it has a wide variety of use cases which will be discussed in Section 4. The technical details of the protocol are contained in the following paragraphs.
 
 The primary objective of the Ntrip protocol is to transmit correction data from reference stations to receivers over the Internet.  Its architecture is similar to that of a streaming Internet radio service.  When a GNSS receiver wants to ``listen'' to a correction stream from a reference station, it requests the stream from a broadcast source which delivers the stream to the receiver in real time.  In Ntrip terminology a reference station is known as an Ntrip Source, a receiver is known as an Ntrip Client, and a broadcaster is known as an Ntrip Caster.  An additional component known as an Ntrip Server acts as a middle man between sources and casters.  The server aggregates data streams coming from sources and delivers them to casters which in turn aggregate several servers.
 \newline
-\newline
-// TODO Insert picture of the Ntrip architecture here (ntripdiagram.jpg is in this folder)
-\newline
 
 The standard is relatively abstract in its definitions of these components so it is helpful to understand how they might be implemented in a real Ntrip network.  An Ntrip source is simply a pseudonym for a GNSS reference station such as the Trimble NetRS on which we conducted our experiments.  The device generates raw RTCM data which is uploaded to a server using one of several communications interfaces such as serial, TCP/IP, or various others (the Ntrip standard actually doesn’t define a communication interface between sources and servers).  An Ntrip Server and an Ntrip Caster are generally implemented as traditional software packages installed on one or more desktop/laptop computer(s).  Although they are defined as two logically separate entities, the server and caster can be implemented as part of the same program and still conform to the specification \cite{NTRIP2}.  A client is a piece of software at the end users receiver which is trying to correct its position.  A client downloads a list of reachable devices from the caster.  The list of devices is called a source table and contains entries for other casters, networks, and correction streams.  The Ntrip client downloads corrections and hands them off to the GNSS software which then applies them to an uncorrected position in order to get a corrected, high precision, position. During our research we have found Ntrip client programs implemented on cell phones and devices known as data controllers, however, it would be perfectly reasonable to implement it directly on the receiver itself.
+
+
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale=0.60]{ntripdiagram.jpg}
+	\caption{Ntrip Protocol Architecture}
+\end{figure}
+
 
 The reason we have decided to focus our efforts on Ntrip and RTCM is because of their non-proprietary nature.  The two are not the only protocols available for encoding and disseminating differential correction data but they are certainly widely implemented and open to the general public (for a small fee).  Knowing that all differential GNSS packages adhere to the same physical principles, we assume that they would be vulnerable in similar ways but this question is left for future work.
 
