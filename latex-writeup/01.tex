@@ -178,7 +178,7 @@ Before we go into details of the attack on a Real Time Kinematics Engine, we wil
 
 //  TODO attack diagram
 
-In order to show how our attack works, we needed to set up an environment eqivalent to that of a fully functioning Ntrip network.  We set up a Linux virtual machine running an FTP server and an official BKG\cite{NTRIP_BC_INFO} (the organization that created Ntrip) implementation of an Ntrip Caster and an Ntrip Server while the Windows 7 host machine was running an Ntrip Client.  We connect to the NetRS device over a TCP/IP connection through the virtual machine.
+In order to show how our attack works, we needed to set up an environment eqivalent to that of a fully functioning Ntrip network.  We set up a Linux virtual machine running an FTP server and a reference implementation of a caster and server which was downloaded from BKG's official Ntrip site\cite{NTRIP_BC_INFO}. The Windows 7 host machine was running an Ntrip Client.  We connect to the NetRS device over a TCP/IP connection through the Linux virtual machine.
 
 \subsection{The Attack}
 
@@ -195,6 +195,14 @@ Our exploit script acts as a normal Ntrip Source that sends out RTCM3 correction
 \subsection{What This Attack Means}
 
 In our attack, we saw that we can send arbitrary correction data from a mountpoint that will travel through an Ntrip network to affect a client requesting GNSS correction data.  A client is directly affected by RTCM3 correction data that we send from the NetRS device and can be tricked into recalculating its own position.  A stronger and simpler attack would be to masquarade via a Man in the Middle attack as an Ntrip Caster due to the lack of mutual authentication.  We do not go into the specific details of a MitM attack since much research is done in this area and the attack is trivial.
+
+\subsection{Attack Mitigations}
+
+The Ntrip network should be resilient to attack for reliable GPS correction data.  NDGPS uses a reference monitor to check the network for correction data outside of a given normal value.  Ntrip could potentially use a similar monitoring system to ensure the correction data traveling from an Ntrip Source propagating to an Ntrip client is within a valid range.
+
+All authentication traffic should be encrypted.  Allowing passwords to be transmitted in plaintext or base-64 encoding should be eliminated from the Ntrip system.  Also, mutual authentication should occur between entities in the Ntrip network to thwart Man in the Middle attacks.
+
+Future research should include additional research into attack mitigations as well as their effect on the Ntrip network.
 
 \section{Scope of Impact}
 
