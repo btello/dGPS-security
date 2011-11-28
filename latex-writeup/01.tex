@@ -35,6 +35,9 @@ bookmarksopen= {true}
 \maketitle
 
 \section{Introduction}
+
+// TODO Introduce GNSS
+
 \section{Differential GPS}
 
 Differential GPS or DGPS is a method for increasing the accuracy of ordinary
@@ -83,7 +86,7 @@ The primary objective of the Ntrip protocol is to transmit correction data from 
 // TODO Insert picture of the Ntrip architecture here (ntripdiagram.jpg is in this folder)
 \newline
 
-The standard is relatively abstract in its definitions of these components so it is helpful to understand how they might be implemented in a real Ntrip network.  An Ntrip source is simply a pseudonym for a GNSS reference station such as the Trimble NetRS on which we conducted our experiments.  The device generates raw RTCM data which is uploaded to a server using one of several communications interfaces such as serial, TCP/IP, or various others (the Ntrip standard actually doesn’t define a communication interface between sources and servers).  An Ntrip Server and an Ntrip Caster are generally implemented as traditional software packages installed on one or more desktop/laptop computer(s).  Although they are defined as two logically separate entities, the server and caster can be implemented as part of the same program and still conform to the specification \cite{NTRIP2}.  A client is a piece of software at the end user's receiver which is trying to correct its position.  A client downloads a list of reachable devices from the caster.  The list of devices is called a source table and contains entries for other casters, networks, and correction streams.  The Ntrip client downloads corrections and hands them off to the GNSS software which then applies them to an uncorrected position in order to get a corrected, high precision, position. During our research we have found Ntrip client programs implemented on cell phones and devices known as data controllers, however, it would be perfectly reasonable to implement it directly on the receiver itself.
+The standard is relatively abstract in its definitions of these components so it is helpful to understand how they might be implemented in a real Ntrip network.  An Ntrip source is simply a pseudonym for a GNSS reference station such as the Trimble NetRS on which we conducted our experiments.  The device generates raw RTCM data which is uploaded to a server using one of several communications interfaces such as serial, TCP/IP, or various others (the Ntrip standard actually doesn’t define a communication interface between sources and servers).  An Ntrip Server and an Ntrip Caster are generally implemented as traditional software packages installed on one or more desktop/laptop computer(s).  Although they are defined as two logically separate entities, the server and caster can be implemented as part of the same program and still conform to the specification \cite{NTRIP2}.  A client is a piece of software at the end users receiver which is trying to correct its position.  A client downloads a list of reachable devices from the caster.  The list of devices is called a source table and contains entries for other casters, networks, and correction streams.  The Ntrip client downloads corrections and hands them off to the GNSS software which then applies them to an uncorrected position in order to get a corrected, high precision, position. During our research we have found Ntrip client programs implemented on cell phones and devices known as data controllers, however, it would be perfectly reasonable to implement it directly on the receiver itself.
 
 The reason we have decided to focus our efforts on Ntrip and RTCM is because of their non-proprietary nature.  The two are not the only protocols available for encoding and disseminating differential correction data but they are certainly widely implemented and open to the general public (for a small fee).  Knowing that all differential GNSS packages adhere to the same physical principles, we assume that they would be vulnerable in similar ways but this question is left for future work.
 
@@ -170,7 +173,9 @@ Section 2.1.3 of the Ntrip version 2 standard describes functionality in which a
 
 \section{An Attack on a Real Time Kinematics Engine}
 
-// TODO Use the picture of the attack (controlledShiftUsingRTCM1005.jpg is in this folder)
+\begin{center}
+\includegraphics[scale=0.60]{controlledShiftUsingRTCM1005.jpeg}\\
+\end{center}
 
 \subsection{Attack Testbed}
 
@@ -178,11 +183,11 @@ Before we go into details of the attack on a Real Time Kinematics Engine, we wil
 
 //  TODO attack diagram
 
-In order to show how our attack works, we needed to set up an environment eqivalent to that of a fully functioning Ntrip network.  We set up a Linux virtual machine running an FTP server and a reference implementation of a caster and server which was downloaded from BKG's official Ntrip site\cite{NTRIP_BC_INFO}. The Windows 7 host machine was running an Ntrip Client.  We connect to the NetRS device over a TCP/IP connection through the Linux virtual machine.
+In order to show how our attack works, we needed to set up an environment eqivalent to that of a fully functioning Ntrip network.  We set up a Linux virtual machine running an FTP server and an official BKG\cite{NTRIP_BC_INFO} (the organization that created Ntrip) implementation of an Ntrip Caster and an Ntrip Server while the Windows 7 host machine was running an Ntrip Client.  We connect to the NetRS device over a TCP/IP connection through the virtual machine.
 
 \subsection{The Attack}
 
-The Ntrip Client in our test environment receives RTCM3 correction data and applies that correction data to the GPS stream it normally receives.  The client will recalculate where it believes it is at based on this correction data.  The Ntrip Client will query an Ntrip Caster and request correction data from a specific mountpoint that the Ntrip Caster knows about.  The Ntrip Caster receives information about its associated mountpoints through an Ntrip Server.  The Ntrip Server connects to its associated mountpoints to receive streaming correction data that it forwards to the Ntrip Caster.  For the purposes of our attack scenario, the mountpoint the client is requesting updates from is the compromised NetRS device.
+The Ntrip Client in our test environment receives RTCM3 correction data and applies that correction data to the GPS stream it normally receives.  The client will recalculate where it believes it is located based on this correction data.  The Ntrip Client will query an Ntrip Caster and request correction data from a specific mountpoint that the Ntrip Caster knows about.  The Ntrip Caster receives information about its associated mountpoints through an Ntrip Server.  The Ntrip Server connects to its associated mountpoints to receive streaming correction data that it forwards to the Ntrip Caster.  For the purposes of our attack scenario, the mountpoint the client is requesting updates from is the compromised NetRS device.
 
 To setup our attack scenario we configure an Ntrip Caster and an Ntrip Server to communicate together.  The Ntrip Server is configured to receive streaming data from the NetRS device and to forward that data to the Ntrip Caster.  The Ntrip Caster is configured to receive mountpoint information from the Ntrip Server and to forward the correction information for a given mountpoint to a client that has the proper credentials, username: user and password: prettyplease.
 
@@ -195,14 +200,6 @@ Our exploit script acts as a normal Ntrip Source that sends out RTCM3 correction
 \subsection{What This Attack Means}
 
 In our attack, we saw that we can send arbitrary correction data from a mountpoint that will travel through an Ntrip network to affect a client requesting GNSS correction data.  A client is directly affected by RTCM3 correction data that we send from the NetRS device and can be tricked into recalculating its own position.  A stronger and simpler attack would be to masquarade via a Man in the Middle attack as an Ntrip Caster due to the lack of mutual authentication.  We do not go into the specific details of a MitM attack since much research is done in this area and the attack is trivial.
-
-\subsection{Attack Mitigations}
-
-The Ntrip network should be resilient to attack for reliable GPS correction data.  NDGPS uses a reference monitor to check the network for correction data outside of a given normal value.  Ntrip could potentially use a similar monitoring system to ensure the correction data traveling from an Ntrip Source propagating to an Ntrip client is within a valid range.
-
-All authentication traffic should be encrypted.  Allowing passwords to be transmitted in plaintext or base-64 encoding should be eliminated from the Ntrip system.  Also, mutual authentication should occur between entities in the Ntrip network to thwart Man in the Middle attacks.
-
-Future research should include additional research into attack mitigations as well as their effect on the Ntrip network.
 
 \section{Scope of Impact}
 
