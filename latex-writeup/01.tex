@@ -9,7 +9,7 @@
 %%% Scribes: you must fill these in %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\lecdate}{November 23, 2011}
-\newcommand{\lectitle}{A Taxonomy of Vulnerabilities In Differential GPS}
+\newcommand{\lectitle}{Differential GPS Attack Surface Analysis}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -86,13 +86,13 @@ The primary objective of the Ntrip protocol is to transmit correction data from 
 
 The standard is relatively abstract in its definitions of these components so it is helpful to understand how they might be implemented in a real Ntrip network.  An Ntrip source is simply a pseudonym for a GPS reference station such as the Trimble NetRS on which we conducted our experiments.  The device generates raw RTCM data which is uploaded to a server using one of several communications interfaces such as serial, TCP/IP, or various others (the Ntrip standard actually doesn't define a communication interface between sources and servers).  An Ntrip Server and an Ntrip Caster are generally implemented as traditional software packages installed on one or more desktop/laptop computer(s).  Although they are defined as two logically separate entities, the server and caster can be implemented as part of the same program and still conform to the specification \cite{NTRIP2}.  A client is a piece of software at the end user's receiver which is trying to correct its position.  A client downloads a list of reachable devices from the caster.  The list of devices is called a source table and contains entries for other casters, networks, and correction streams.  The Ntrip client downloads corrections and hands them off to the GPS software which then applies them to an uncorrected position in order to get a corrected, high precision, position. During our research we have found Ntrip client programs implemented on cell phones and devices known as data controllers, however, it would be perfectly reasonable to implement it directly on the receiver itself.
 
-
 \begin{figure}[h!]
 	\centering
 		\includegraphics[scale=0.60]{ntripdiagram.jpg}
 	\caption{Ntrip Protocol Architecture}
 \end{figure}
 
+The standard is relatively abstract in its definitions of these components so it is helpful to understand how they might be implemented in a real Ntrip network.  An Ntrip source is simply a pseudonym for a GPS reference station such as the Trimble NetRS on which we conducted our experiments.  The device generates raw RTCM data which is uploaded to a server using one of several communications interfaces such as serial, TCP/IP, or various others (the Ntrip standard actually doesn’t define a communication interface between sources and servers).  An Ntrip Server and an Ntrip Caster are generally implemented as traditional software packages installed on one or more desktop/laptop computer(s).  Although they are defined as two logically separate entities, the server and caster can be implemented as part of the same program and still conform to the specification \cite{NTRIP2}.  A client is a piece of software at the end users receiver which is trying to correct its position.  A client downloads a list of reachable devices from the caster.  The list of devices is called a source table and contains entries for other casters, networks, and correction streams.  The Ntrip client downloads corrections and hands them off to the GPS software which then applies them to an uncorrected position in order to get a corrected, high precision, position. During our research we have found Ntrip client programs implemented on cell phones and devices known as data controllers, however, it would be perfectly reasonable to implement it directly on the receiver itself.
 
 The reason we have decided to focus our efforts on Ntrip and RTCM is because of their non-proprietary nature.  The two are not the only protocols available for encoding and disseminating differential correction data but they are certainly widely implemented and open to the general public (for a small fee).  Knowing that all differential GPS packages adhere to the same physical principles, we assume that they would be vulnerable in similar ways but this question is left for future work.
 
@@ -313,7 +313,6 @@ The weaknesses seen in Ntrip bring into question the security of differential GP
 Dr. Georg Weber for providing helpful links and commentary on the adoption of Ntrip in geodetic equipment.
 Jeff Jalbrzikowski for providing valuable guidance regarding real life applications of Differential GPS and GPS in the context of Surveying.
 Tyler Nyswander for sharing his efforts in gaining root access to the NetRS device.
-Professor David Brumley for his guidance and access to resources.
 
 \section{Appendix A - Tables}
 
