@@ -292,15 +292,13 @@ NetRS reference station, and as such the results are limited to that device.
 However, the Trimble NetRS is the most widely deployed Reference Station
 that can be found through the master NtripCaster list on rtcm-ntrip.org.
 Out of 4995 Reference Stations, 1126 were Trimble NetRS devices, vulnerable
-to the attack outlined in this paper.
+to the attack outlined in this paper.  
 
 Further digging also shows that the sources in the field are indeed vulnerable
 in other ways as well.  Out of the 4995 reference stations, 4994 use basic
 authentication with nothing more than base-64 encoding to protect username
 and passwords.  Only one reference stations uses the stronger digest
-authentication to provide any protection from snooping passwords.
-
-\textbf{Integrity Monitor Stuff}
+authentication to provide any protection from snooping passwords.  [Evan6]
 
 \section{Future Work}
 
