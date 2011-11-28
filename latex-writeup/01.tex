@@ -195,11 +195,15 @@ Before we go into details of the attack on a Real Time Kinematics Engine, we wil
 \end{figure}
 
 
-In order to show how our attack works, we needed to set up an environment eqivalent to that of a fully functioning Ntrip network.  We set up a Linux virtual machine running an FTP server and a reference implementation of a caster and server which was downloaded from BKG's official Ntrip site\cite{NTRIP_BC_INFO}. The Windows 7 host machine was running an Ntrip Client.  We connect to the NetRS device over a TCP/IP connection through the Linux virtual machine.
+In order to show how our attack works, we needed to set up an environment eqivalent to that of a fully functioning Ntrip network.  We configured a Linux virtual machine running an FTP server and a reference implementation of a caster and server, downloaded from BKG's official Ntrip site\cite{NTRIP_BC_INFO}. The Windows 7 host machine was running a program called RTKNAVI as the Ntrip client.  RTKNAVI uses the RTKLIB opensource library as an RTK engine.  We connect to the NetRS mountpoint over a TCP/IP connection through the Linux virtual machine.
 
 \subsection{The Attack}
 
-The Ntrip Client in our test environment receives RTCM3 correction data and applies that correction data to the GPS stream it normally receives.  The client will recalculate where it believes it is located based on this correction data.  The Ntrip Client will query an Ntrip Caster and request correction data from a specific mountpoint that the Ntrip Caster knows about.  The Ntrip Caster receives information about its associated mountpoints through an Ntrip Server.  The Ntrip Server connects to its associated mountpoints to receive streaming correction data that it forwards to the Ntrip Caster.  For the purposes of our attack scenario, the mountpoint the client is requesting updates from is the compromised NetRS device.
+The attack began with two pre-attack conditions.  We launched our attack while an Ntrip Caster was connected and exchanging data with an Ntrip Server.  Simultaneously, our attack happened while the same Ntrip Server was receiving streaming data from a NetRS mountpoint.
+
+The first stage of the attack was to exploit the NetRS mountpoint.  The NetRS device used an Apache module to run perl scripts through a web interface.  Using a custom perl script as a payload to the NetRS device, the attack machine successfully obtained a reverse shell on the mountpoint.  While on the NetRS device, a few observations were made and diagnosed on how to progress.
+
+The NetRS was running on a PowerPC architecture with very few pre-installed programs.  Since the attack machine uses x86, we would have to cross 
 
 To setup our attack scenario we configure an Ntrip Caster and an Ntrip Server to communicate together.  The Ntrip Server is configured to receive streaming data from the NetRS device and to forward that data to the Ntrip Caster.  The Ntrip Caster is configured to receive mountpoint information from the Ntrip Server and to forward the correction information for a given mountpoint to a client that has the proper credentials, username: user and password: prettyplease.
 
