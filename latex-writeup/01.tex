@@ -36,7 +36,7 @@ bookmarksopen= {true}
 
 \section{Introduction}
 
-// TODO Introduce GNSS
+
 
 \section{Differential GPS}
 
@@ -156,6 +156,8 @@ Regarding the caster/server passwords we can't say how difficult it would be to 
 
 \section{Attack Taxonomy}
 
+In this section, we provide a list of potential objectives of an attack against a differential GNSS system.  We believe that these would be realistic objectives for an attacker based on current real-life usage of GNSS systems but are entirely speculative at this point.  We have no evidence showing that differential GNSS systems have been exploited for these means.  Future work would further investigate the objectives of real world attacks against differential GNSS systems.
+
  \subsection{Economic Damage}
  
  Almost all of the attack objectives outlined in this section will cause some level of economic damage.  An attacker could destroy automatically piloted vehicles, cause faulty surveys resulting in wasted effort or damage to structural integrity, make false charges to an Ntrip subscribers account, etc.
@@ -170,13 +172,13 @@ In our attack against a reference RTK implementation described in Section 7, we 
 
 Depending on the billing model used, an attacker could log excessive accesses to a legitimate user's account.  The billing models we encountered were all flat rate charges (per month) but one could imagine other pay-per-use systems.  For example, if a service provider charged a dollar for every MB of correction data downloaded, an attacker could cause financial damage to a subscriber.
 
-\subsection{Diversionary Attacks}
+\subsection{Alarm Control}
 
-The use of differential GPS in infrastructure and environmental monitoring projects provides an interesting diversionary attack\cite{UCSD_RTN}.  Say an attacker wanted to destroy a bridge on the East side of a city without alerting authorities of his presence.  He could cause a monitoring device to report structural damage to a bridge on the west side of that city while suppressing alarms from the bridge being destroyed.  Depending on the level of response to such an alarm, authorities and resources would be diverted to the site of the false damage in the West while the attacker wreaked havoc in the East.  This is similar to Stuxnet's method of causing critical warning mechanisms to report that the system was performing normally\cite{STUXNET}. 
+The use of differential GPS in infrastructure and environmental monitoring projects provides attackers with the ability to interfere with sensor alarms\cite{UCSD_RTN}.  If an adversary were to transmit correction data to a stationary sensor to make it believe that it were moving, this could generate a false alarm if the movement tolerance were to be surpassed.  The damages from such an attack would vary with the level of response to a sensor alarm.  The other possibility is alarm suppression.  In an attack targeted on alarm suppression, the attacker would displace a stationary sensor some distance $\Delta$ over a time period $ t $ while simultaneously feeding the receiver corrupted correction data to make it believe that its total displacement during $ t $ was equal to 0.  This attack would hide an attacker whose goal is to move sensors without being noticed.  This is similar to Stuxnet's technique of silencing critical sensors\cite{STUXNET}. 
 
 \subsection{Location Privacy Violations}
 
-Section 2.1.3 of the Ntrip version 2 standard describes functionality in which a client transmits its location information to a caster so that the caster can provide location aware services.  An attacker who can monitor the network or who has control of a caster can thus observe the position of a client which may not be acceptable in certain circumstances.
+Section 2.1.3 of the Ntrip version 2 standard describes functionality in which a client transmits its location information to a caster so that the caster can provide location aware services.  An attacker who can monitor the network or who has control of a caster can observe the position of a client which may not be acceptable in certain circumstances.
 
 \section{An Attack on a Real Time Kinematics Engine}
 
@@ -265,6 +267,7 @@ Investigate how networks average error
 Find out if the corrupted corrections can be used to affect time calculations
 Investigate other DGPS protocols
 Run our attack on a real RTK receiver (not rtklib)  and see if we get similar results
+Investigate whether or not any real life attacks against differential GNSS have ever occurred and what the objectives were.
 
 \section{Conclusion}
 
